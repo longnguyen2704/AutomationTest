@@ -1,4 +1,4 @@
-package src.driver;
+package src.driverForCamID;
 
 import io.appium.java_client.remote.MobileCapabilityType;
 

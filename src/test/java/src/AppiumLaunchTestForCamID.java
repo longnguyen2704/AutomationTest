@@ -4,26 +4,27 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import src.driverForCamID.MobileCapabilityTypeEx;
 
 import java.net.URL;
 
-public class AppiumLaunchTest {
+public class AppiumLaunchTestForCamID implements MobileCapabilityTypeEx {
     public static void main(String[] args) throws InterruptedException {
         AppiumDriver<MobileElement> driver = null;
 
         // Desired Caps
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-        desiredCapabilities.setCapability("platformName", "Android");
-        desiredCapabilities.setCapability("automationName", "uiautomator2");
-        desiredCapabilities.setCapability("udid", "R7AWA03KZ0M");
-        desiredCapabilities.setCapability("appPackage", "com.metfone.selfcare");
-        desiredCapabilities.setCapability("appActivity", "com.metfone.selfcare.activity.HomeActivity");
+        desiredCapabilities.setCapability(PLATFORM_NAME, "Android");
+        desiredCapabilities.setCapability(AUTOMATION_NAME, "uiautomator2");
+        desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
+        desiredCapabilities.setCapability(APP_PACKAGE, "com.metfone.selfcare");
+        desiredCapabilities.setCapability(APP_ACTIVITY, "com.metfone.selfcare.activity.HomeActivity");
 
         // Specify Appium Server URL
         URL appiumServer = null;
 
         try {
-            appiumServer = new URL("http://localhost:4723/wd/hub");
+            appiumServer = new URL("http://localhost:4723");
         } catch (Exception e) {
             e.printStackTrace();
         }

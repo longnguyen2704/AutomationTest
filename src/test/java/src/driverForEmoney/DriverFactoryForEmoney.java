@@ -1,4 +1,4 @@
-package src.driver;
+package src.driverForEmoney;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -8,7 +8,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
 
-public class DriverFactory implements MobileCapabilityTypeEx {
+public class DriverFactoryForEmoney implements MobileCapabilityTypeEx {
     public static AppiumDriver<MobileElement> getDriver(Platform platform) {
         AppiumDriver<MobileElement> driver;
 
@@ -17,14 +17,14 @@ public class DriverFactory implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(PLATFORM_NAME, "Android");
         desiredCapabilities.setCapability(AUTOMATION_NAME, "uiautomator2");
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
-        desiredCapabilities.setCapability(APP_PACKAGE, "com.metfone.selfcare");
-        desiredCapabilities.setCapability(APP_ACTIVITY, "com.metfone.selfcare.activity.HomeActivity");
+        desiredCapabilities.setCapability(APP_PACKAGE, "com.viettel.vtt.vn.emoneycustomer.dev");
+        desiredCapabilities.setCapability(APP_ACTIVITY, "com.viettel.vtt.vn.emoneycustomer.feature.login.LoginActivity");
 
         // Specify Appium Server URL
         URL appiumServer = null;
 
         try {
-            appiumServer = new URL("http://localhost:4723/wd/hub");
+            appiumServer = new URL("http://localhost:4723");
         } catch (Exception e) {
             e.printStackTrace();
         }

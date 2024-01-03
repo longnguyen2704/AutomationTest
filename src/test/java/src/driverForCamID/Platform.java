@@ -1,4 +1,4 @@
-package src.driver;
+package src.driverForCamID;
 
 public enum Platform {
     ANDROID, IOS
