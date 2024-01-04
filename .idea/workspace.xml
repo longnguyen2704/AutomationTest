@@ -5,28 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/mylibrary/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/consumer-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/src/androidTest/java/com/example/mylibrary/ExampleInstrumentedTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/src/test/java/com/example/mylibrary/ExampleUnitTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/AppiumLaunchTestForEmoney.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/ReadTestcase/ReadTCsByExcel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/ReadTestcase/ReadTCsByYAML.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/api_learning/CamIDAutomationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/api_learning/EmoneyAutomationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/MobileCapabilityTypeEx.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Platform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/AppiumLaunchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AppiumLaunchTestForCamID.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/api_learning/LoginFormTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driver/DriverFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForCamID/DriverFactoryForCamID.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driver/MobileCapabilityTypeEx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForCamID/MobileCapabilityTypeEx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driver/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForCamID/Platform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AppiumLaunchTestForEmoney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AppiumLaunchTestForEmoney.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/api_learning/EmoneyAutomationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/api_learning/EmoneyAutomationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,21 +39,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/SourceCode/LongAutomation/LongAppium/Appium_Mobile/src/test/java/src/driverForEmoney",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/SourceCode/LongAutomation/LongAppium/Appium_Mobile/src/test/java/src/driverForEmoney&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\SourceCode\LongAutomation\LongAppium\Appium_Mobile\src\test\java\src\driverForEmoney" />
@@ -87,7 +69,7 @@
       <recent name="src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CamIDAutomationTest">
+  <component name="RunManager" selected="Application.EmoneyAutomationTest">
     <configuration name="AppiumLaunchTestForCamID" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="src.AppiumLaunchTestForCamID" />
       <module name="Appium_Mobile" />
@@ -129,8 +111,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CamIDAutomationTest" />
         <item itemvalue="Application.EmoneyAutomationTest" />
+        <item itemvalue="Application.CamIDAutomationTest" />
         <item itemvalue="Application.AppiumLaunchTestForCamID" />
       </list>
     </recent_temporary>

@@ -18,7 +18,7 @@ public class DriverFactoryForEmoney implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(AUTOMATION_NAME, "uiautomator2");
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.viettel.vtt.vn.emoneycustomer.dev");
-        desiredCapabilities.setCapability(APP_ACTIVITY, "com.viettel.vtt.vn.emoneycustomer.feature.login.LoginActivity");
+        desiredCapabilities.setCapability(APP_ACTIVITY, "com.viettel.vtt.vn.emoneycustomer.feature.splash.SplashActivity");
 
         // Specify Appium Server URL
         URL appiumServer = null;
