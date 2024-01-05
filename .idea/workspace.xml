@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/AppiumLaunchTestForEmoney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AppiumLaunchTestForEmoney.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/ReadTestcase/ReadTCsByYAML.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/ReadTestcase/ReadTCsByYAML.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/api_learning/EmoneyAutomationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/api_learning/EmoneyAutomationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,9 +109,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ReadTCsByYAML" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="src.ReadTestcase.ReadTCsByYAML" />
+      <module name="Appium_Mobile" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="src.ReadTestcase.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.EmoneyAutomationTest" />
+        <item itemvalue="Application.ReadTCsByYAML" />
         <item itemvalue="Application.CamIDAutomationTest" />
         <item itemvalue="Application.AppiumLaunchTestForCamID" />
       </list>
