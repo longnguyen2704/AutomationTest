@@ -1,4 +1,4 @@
-package src;
+package src.driverForCamID;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
