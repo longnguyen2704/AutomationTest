@@ -1,12 +1,11 @@
 package src.api_learning;
 
+import org.yaml.snakeyaml.Yaml;
 import io.appium.java_client.*;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.yaml.snakeyaml.Yaml;
 import src.driverForEmoney.*;
 
 import java.io.FileInputStream;
@@ -15,6 +14,7 @@ import java.io.InputStream;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+
 
 public class eMoneyAutoTestByReadTCs {
     public static void main(String[] args) throws IOException {
@@ -53,6 +53,9 @@ public class eMoneyAutoTestByReadTCs {
 
             MobileElement VerifyBtn
                     = appiumDriver.findElement(MobileBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout"));
+            Thread.sleep(1500);
+            wait.until(ExpectedConditions
+                    .visibilityOfElementLocated(MobileBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout")));
             VerifyBtn.click();
             Thread.sleep(1500);
 
@@ -159,6 +162,7 @@ public class eMoneyAutoTestByReadTCs {
             MobileElement EnterOTP
                     = appiumDriver.findElement(MobileBy.xpath("//android.widget.EditText[@resource-id=\"android:id/input\"]"));
             if (EnterOTP.isDisplayed()) {
+                Thread.sleep(2000);
                 wait.until(ExpectedConditions
                         .visibilityOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id=\"android:id/input\"]")));
                 Thread.sleep(1500);
@@ -187,7 +191,6 @@ public class eMoneyAutoTestByReadTCs {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        appiumDriver.quit();
     }
 
     private static void readTestDataFromYAML(String yamlFilePath, AppiumDriver<MobileElement> appiumDriver) throws IOException, InterruptedException {
@@ -208,34 +211,61 @@ public class eMoneyAutoTestByReadTCs {
     }
 
     private static void performTestSteps(AppiumDriver<MobileElement> appiumDriver, String testCaseName, List<Map<String, String>> testStep) throws InterruptedException {
-        System.out.println("Executing Test Case: " + testCaseName);
+        System.out.println("Executing Test Case => " + testCaseName);
         //Vòng lặp qua các bước kiểm thử trong Testcase
         for (Map<String, String> step : testStep) {
             String action = step.get("action");
             String ID = step.get("ID");
             String inputData = step.get("inputData");
-            System.out.println("Executing step - Action: " + action + ", ID: " + ID + ", InputData: " + inputData);
-            performAction(appiumDriver, action, ID, inputData);
+            String coordinates = step.get("coordinates");
+            System.out.println("Executing step - Action: " + action
+                    + ", ID: " + ID
+                    + ", coordinates: " + coordinates
+                    + ", InputData: " + inputData);
+            performAction(appiumDriver, action, ID, inputData, coordinates);
             System.out.println("Step executed successfully.");
         }
     }
 
-    private static void performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData) throws InterruptedException {
-        String elemAction = action.toLowerCase();
+    private static void performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) throws InterruptedException {
+        String selector = action.toLowerCase();
         WebDriverWait wait = new WebDriverWait(appiumDriver, 10L);
-        switch (elemAction) {
+        switch (selector) {
             case "click":
-                wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
-                Thread.sleep(5000);
-                appiumDriver.findElement(MobileBy.id(ID)).click();
+                Thread.sleep(1500);
+                if (ID.startsWith("com")) {
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
+                    appiumDriver.findElement(MobileBy.id(ID)).click();
+                } else if (ID.startsWith("//")) {
+                    // Nếu selector bắt đầu bằng "//", sử dụng xpath
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
+                    appiumDriver.findElement(MobileBy.xpath(ID)).click();
+                } else {
+                    // Mặc định sử dụng ID
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
+                    appiumDriver.findElement(MobileBy.id(ID)).click();
+                }
                 break;
             case "tap":
-                Thread.sleep(3000);
-                TouchAction touchAction = getValueXYFromElem(ID);
-                appiumDriver.performTouchAction(touchAction);
+                Thread.sleep(1500);
+                try {
+                    String[] parts = coordinates.split(",");
+                    String xPart = parts[0].split("x:")[1].trim();
+                    String yPart = parts[1].split("y:")[1].trim();
+                    int xValue = Integer.parseInt(xPart);
+                    int yValue = Integer.parseInt(yPart);
+
+                    TouchAction touchAction = new TouchAction(appiumDriver);
+                    touchAction
+                            .tap(PointOption.point(xValue, yValue))
+                            .perform();
+                    Thread.sleep(1500);
+                } catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
+                }
                 break;
             case "sendKeys":
-                MobileElement PhoneReceiver = appiumDriver.findElement(By.id(ID));
+                MobileElement PhoneReceiver = appiumDriver.findElement(MobileBy.id(ID));
                 try {
                     wait.until(ExpectedConditions.visibilityOf(PhoneReceiver));
                     if (PhoneReceiver.isDisplayed()) {
@@ -252,18 +282,5 @@ public class eMoneyAutoTestByReadTCs {
                 appiumDriver.findElementsById(ID);
                 break;
         }
-    }
-
-    private static TouchAction getValueXYFromElem(String element) {
-        AppiumDriver<MobileElement> appiumDriver
-                = DriverFactoryForEmoney.getDriver(Platform.ANDROID);
-        String[] parts = element.split(",");
-        String xPart = parts[0].split("x:")[1].trim();
-        String yPart = parts[1].split("y:")[1].trim();
-
-        int xValue = Integer.parseInt(xPart);
-        int yValue = Integer.parseInt(yPart);
-
-        return new TouchAction(appiumDriver).tap(PointOption.point(xValue, yValue));
     }
 }
