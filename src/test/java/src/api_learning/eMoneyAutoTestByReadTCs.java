@@ -29,7 +29,8 @@ public class eMoneyAutoTestByReadTCs {
         try {
             MobileElement HomeScreenEmoney
                     = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/iv_logo"));
-            Thread.sleep(1000);
+            wait.until(ExpectedConditions.visibilityOf(HomeScreenEmoney));
+            Thread.sleep(1500);
 //            MobileElement ChooseLangBtn
 //                    = appiumDriver.findElement(MobileBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.FrameLayout/android.widget.LinearLayout"));
 //            Thread.sleep(2000);
@@ -253,8 +254,7 @@ public class eMoneyAutoTestByReadTCs {
 
     private static void performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) throws InterruptedException {
         String selector = action.toLowerCase();
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 10L);
-        Thread.sleep(3500);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 5L);
         switch (selector) {
             case "click":
                 Thread.sleep(2000);
@@ -280,7 +280,6 @@ public class eMoneyAutoTestByReadTCs {
                 }
                 break;
             case "tap":
-                Thread.sleep(2000);
                 try {
                     String[] parts = coordinates.split(",");
                     String xPart = parts[0].split("x:")[1].trim();
@@ -292,7 +291,6 @@ public class eMoneyAutoTestByReadTCs {
                     touchAction
                             .tap(PointOption.point(xValue, yValue))
                             .perform();
-                    Thread.sleep(1500);
                 } catch (Exception e) {
                     System.out.println("Exception: " + e.getMessage());
                 }
