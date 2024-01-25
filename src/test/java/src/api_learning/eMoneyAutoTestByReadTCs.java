@@ -1,9 +1,7 @@
 package src.api_learning;
 
-import org.testng.annotations.Test;
 import org.yaml.snakeyaml.Yaml;
 import io.appium.java_client.*;
-import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,15 +11,13 @@ import src.driverForEmoney.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
 
-public class eMoneyAutoTestByReadTCs {
-
+public class eMoneyAutoTestByReadTCs extends TakeScreenShot {
     //@Test
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         AppiumDriver<MobileElement> appiumDriver
                 = DriverFactoryForEmoney.getDriver(Platform.ANDROID);
         WebDriverWait wait = new WebDriverWait(appiumDriver, 5L);
@@ -200,37 +196,38 @@ public class eMoneyAutoTestByReadTCs {
 
             //Read testcase here
             try {
-                //Case trùng số receiver và nhập sai PinCode
-                String yamlFilePath1 = "D:\\CaseSameReceiverNumber.yaml";
-                //Case khác số receiver và nhập sai PinCode
-                String yamlFilePath2 = "D:\\CaseDifferentReceiverNumber.yaml";
-
+                String yamlFilePath1 = "D:\\CaseDifferentReceiverNumber.yaml";
                 // Đọc dữ liệu từ file YAML thứ nhất
                 readTestDataFromYAML(yamlFilePath1, appiumDriver);
 
-                // Đọc dữ liệu từ file YAML thứ hai
-                readTestDataFromYAML(yamlFilePath2, appiumDriver);
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                System.err.println("Đã xảy ra lỗi trong quá trình đọc dữ liệu từ file YAML: " + e.getMessage());
             }
+            takeScreenshot(appiumDriver, "appium_screenshot.png");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private static void readTestDataFromYAML(String yamlFilePath, AppiumDriver<MobileElement> appiumDriver) throws IOException, InterruptedException {
+    private static void readTestDataFromYAML(String yamlFilePath, AppiumDriver<MobileElement> appiumDriver) throws InterruptedException {
         try (InputStream inputStream = new FileInputStream(yamlFilePath)) {
             Yaml yaml = new Yaml();
-            Map<String, List<Map<String, String>>> testData = yaml.load(inputStream);
-            //Vòng lặp qua các bước kiểm thử từ dữ liệu YAML
-            for (Map.Entry<String, List<Map<String, String>>> entry : testData.entrySet()) {
-                String testCaseName = entry.getKey();
-                List<Map<String, String>> testStep = entry.getValue();
-                //Thực hiện các bước kiểm thử trong testcase từ dữ liệu YAML
-                performTestSteps(appiumDriver, testCaseName, testStep);
+            Object yamlObject = yaml.load(inputStream);
+            if (yamlObject instanceof Map) {
+                Map<String, List<Map<String, String>>> testData = (Map<String, List<Map<String, String>>>) yamlObject;
+                // Tiếp tục xử lý dữ liệu YAML ở đây
+                for (Map.Entry<String, List<Map<String, String>>> entry : testData.entrySet()) {
+                    String testCaseName = entry.getKey();
+                    List<Map<String, String>> testStep = entry.getValue();
+                    performTestSteps(appiumDriver, testCaseName, testStep);
+                }
+            } else {
+                // Xử lý trường hợp không phải là Map
+                System.out.println("Dữ liệu YAML không đúng định dạng.");
+                System.out.println("===> " + yamlFilePath + ": run fail");
             }
-        } catch (InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -248,7 +245,7 @@ public class eMoneyAutoTestByReadTCs {
                     + ", Coordinates: " + coordinates
                     + ", InputData: " + inputData);
             performAction(appiumDriver, action, ID, inputData, coordinates);
-            System.out.println("Step executed successfully.");
+            Thread.sleep(1500);
         }
     }
 
@@ -299,10 +296,12 @@ public class eMoneyAutoTestByReadTCs {
                 Thread.sleep(2000);
                 try {
                     if (ID.startsWith("com")) {
+                        //Nếu selector bắt đầu bằng "com", sử dụng resource-id
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                         appiumDriver.findElement(MobileBy.id(ID)).sendKeys(inputData);
                         Thread.sleep(2000);
                     } else if (ID.startsWith("//")) {
+                        //Nếu selector bắt đầu bằng "//", sử dụng xpath
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
                         appiumDriver.findElement(MobileBy.xpath(ID)).sendKeys(inputData);
                         Thread.sleep(2000);
