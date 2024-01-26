@@ -9,7 +9,7 @@ import org.openqa.selenium.TakesScreenshot;
 import java.io.File;
 import java.io.IOException;
 
-public class TakeScreenShot {
+public interface TakeScreenShot {
 
     static void takeScreenshot(AppiumDriver<MobileElement> appiumDriver, String fileName) {
         // Check if the AppiumDriver supports screenshots

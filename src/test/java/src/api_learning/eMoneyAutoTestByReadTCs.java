@@ -17,7 +17,7 @@ import java.util.Map;
 import static src.api_learning.Report.exportReport;
 
 
-public class eMoneyAutoTestByReadTCs extends TakeScreenShot {
+public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report {
     //@Test
     public static void main(String[] args) {
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForEmoney.getDriver(Platform.ANDROID);
@@ -205,7 +205,7 @@ public class eMoneyAutoTestByReadTCs extends TakeScreenShot {
                 System.err.println("Đã xảy ra lỗi trong quá trình đọc dữ liệu từ file YAML: " + e.getMessage());
             }
             //Chụp screen
-            takeScreenshot(appiumDriver, "appium_screenshot.png");
+            TakeScreenShot.takeScreenshot(appiumDriver, "appium_screenshot.png");
             //Xuất report
             String yamlFilePath1 = "D:\\CaseDifferentReceiverNumber.yaml";
             String reportFilePath = "test_report.txt";

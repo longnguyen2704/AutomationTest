@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
-public class Report {
+public interface Report {
     public static void exportReport(String yamlFilePath, String reportFilePath) {
         try (InputStream inputStream = new FileInputStream(yamlFilePath);
              BufferedWriter writer = new BufferedWriter(new FileWriter(reportFilePath))) {
