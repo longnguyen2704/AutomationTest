@@ -14,17 +14,17 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import static src.api_learning.Report.exportReport;
+
 
 public class eMoneyAutoTestByReadTCs extends TakeScreenShot {
     //@Test
     public static void main(String[] args) {
-        AppiumDriver<MobileElement> appiumDriver
-                = DriverFactoryForEmoney.getDriver(Platform.ANDROID);
+        AppiumDriver<MobileElement> appiumDriver = DriverFactoryForEmoney.getDriver(Platform.ANDROID);
         WebDriverWait wait = new WebDriverWait(appiumDriver, 5L);
         //Screen choose Language
         try {
-            MobileElement HomeScreenEmoney
-                    = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/iv_logo"));
+            MobileElement HomeScreenEmoney = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/iv_logo"));
             wait.until(ExpectedConditions.visibilityOf(HomeScreenEmoney));
             Thread.sleep(1500);
 //            MobileElement ChooseLangBtn
@@ -204,7 +204,12 @@ public class eMoneyAutoTestByReadTCs extends TakeScreenShot {
                 e.printStackTrace();
                 System.err.println("Đã xảy ra lỗi trong quá trình đọc dữ liệu từ file YAML: " + e.getMessage());
             }
+            //Chụp screen
             takeScreenshot(appiumDriver, "appium_screenshot.png");
+            //Xuất report
+            String yamlFilePath1 = "D:\\CaseDifferentReceiverNumber.yaml";
+            String reportFilePath = "test_report.txt";
+            exportReport(yamlFilePath1, reportFilePath);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -240,10 +245,7 @@ public class eMoneyAutoTestByReadTCs extends TakeScreenShot {
             String ID = step.get("ID");
             String inputData = step.get("inputData");
             String coordinates = step.get("coordinates");
-            System.out.println("Executing step - Action: " + action
-                    + ", ID: " + ID
-                    + ", Coordinates: " + coordinates
-                    + ", InputData: " + inputData);
+            System.out.println("Executing step - Action: " + action + ", ID: " + ID + ", Coordinates: " + coordinates + ", InputData: " + inputData);
             performAction(appiumDriver, action, ID, inputData, coordinates);
             Thread.sleep(1500);
         }
@@ -285,9 +287,7 @@ public class eMoneyAutoTestByReadTCs extends TakeScreenShot {
                     int yValue = Integer.parseInt(yPart);
 
                     TouchAction touchAction = new TouchAction(appiumDriver);
-                    touchAction
-                            .tap(PointOption.point(xValue, yValue))
-                            .perform();
+                    touchAction.tap(PointOption.point(xValue, yValue)).perform();
                 } catch (Exception e) {
                     System.out.println("Exception: " + e.getMessage());
                 }
