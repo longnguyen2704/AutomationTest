@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/api_learning/Report.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appium_screenshot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/api_learning/EmoneyAutomationTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/api_learning/eMoneyAutoTestByReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/api_learning/eMoneyAutoTestByReadTCs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/ConvertStringToKeyCodes.java" beforeDir="false" />
-    </list>
+    <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
