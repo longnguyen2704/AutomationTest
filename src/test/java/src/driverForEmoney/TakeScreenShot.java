@@ -1,4 +1,4 @@
-package src.api_learning;
+package src.driverForEmoney;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -23,7 +23,7 @@ public interface TakeScreenShot {
             try {
                 File screenshotFile = ((TakesScreenshot) appiumDriver).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(screenshotFile, new File(fileName));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Failed to capture the final screenshot: " + e.getMessage());
             }

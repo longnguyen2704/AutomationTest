@@ -46,7 +46,11 @@
             <artifactId>javafx-controls</artifactId>
             <version>17-ea+2</version> <!-- Thay đổi phiên bản phù hợp -->
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.31</version>
+        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>

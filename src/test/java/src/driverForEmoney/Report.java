@@ -1,4 +1,4 @@
-package src.api_learning;
+package src.driverForEmoney;
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface Report {
-    public static void exportReport(String yamlFilePath, String reportFilePath) {
+    static void exportReport(String yamlFilePath, String reportFilePath) {
         try (InputStream inputStream = new FileInputStream(yamlFilePath);
              BufferedWriter writer = new BufferedWriter(new FileWriter(reportFilePath))) {
             Yaml yaml = new Yaml();
@@ -25,9 +25,8 @@ public interface Report {
                         String inputData = step.get("inputData");
                         String coordinates = step.get("coordinates");
                         String result;
-
                         // Thực hiện hành động kiểm thử và kiểm tra điều kiện để xác định kết quả
-                        if (ID != null) {
+                        if (yamlFilePath.isEmpty() && yamlFilePath.isBlank()) {
                             result = "Success";
                         } else {
                             result = "Fail";
@@ -49,7 +48,7 @@ public interface Report {
                 }
                 System.out.println("Report exported successfully to " + reportFilePath);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
