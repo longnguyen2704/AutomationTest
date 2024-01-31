@@ -3,11 +3,17 @@ package src.driverForEmoney;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public interface Report {
     static void exportReport(String yamlFilePath, String reportFilePath) {
+        String timestamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
+        String[] parts = timestamp.split("_"); // Tách chuỗi theo dấu gạch dưới
+        String datePart = parts[0]; // Phần ngày tháng năm
+
         try (InputStream inputStream = new FileInputStream(yamlFilePath);
              BufferedWriter writer = new BufferedWriter(new FileWriter(reportFilePath))) {
             Yaml yaml = new Yaml();
@@ -26,7 +32,7 @@ public interface Report {
                         String coordinates = step.get("coordinates");
                         String result;
                         // Thực hiện hành động kiểm thử và kiểm tra điều kiện để xác định kết quả
-                        if (yamlFilePath.isEmpty() && yamlFilePath.isBlank()) {
+                        if (!yamlFilePath.isEmpty() && !yamlFilePath.isBlank()) {
                             result = "Success";
                         } else {
                             result = "Fail";
@@ -42,6 +48,8 @@ public interface Report {
                             writer.newLine();
                         }
                         writer.write("Result: " + result);
+                        writer.newLine();
+                        writer.write("Time test: " + datePart);
                         writer.newLine();
                         writer.newLine();
                     }
