@@ -13,9 +13,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/io.appium/java-client -->
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
@@ -24,7 +22,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.29</version> <!-- Số phiên bản có thể thay đổi -->
+            <version>2.0</version> <!-- Số phiên bản có thể thay đổi -->
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -32,6 +30,7 @@
             <version>5.0.0</version> <!-- Số phiên bản có thể thay đổi -->
         </dependency>
         <dependency>
+<<<<<<< HEAD
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
             <version>5.0.6</version> <!-- Sử dụng phiên bản phù hợp với dự án của bạn -->
@@ -41,5 +40,33 @@
             <artifactId>poi-ooxml</artifactId>
             <version>5.0.0</version> <!-- Số phiên bản có thể thay đổi -->
         </dependency>
+=======
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>17-ea+2</version> <!-- Thay đổi phiên bản phù hợp -->
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.31</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.7.0</version>
+            <scope>test</scope>
+        </dependency>
+>>>>>>> 869f985d4440f840fe8ea93cf0c8e345a93254bb
     </dependencies>
 </project>

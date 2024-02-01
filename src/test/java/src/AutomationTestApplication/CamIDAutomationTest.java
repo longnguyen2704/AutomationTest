@@ -1,4 +1,4 @@
-package src.api_learning;
+package src.AutomationTestApplication;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
