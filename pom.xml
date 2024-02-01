@@ -32,14 +32,14 @@
             <version>5.0.0</version> <!-- Số phiên bản có thể thay đổi -->
         </dependency>
         <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>5.0.6</version> <!-- Sử dụng phiên bản phù hợp với dự án của bạn -->
+        </dependency>
+        <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.0.0</version> <!-- Số phiên bản có thể thay đổi -->
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17-ea+2</version> <!-- Thay đổi phiên bản phù hợp -->
         </dependency>
     </dependencies>
 </project>

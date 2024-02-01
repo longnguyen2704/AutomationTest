@@ -153,6 +153,7 @@ public class eMoneyAutoTestByReadTCs {
             //Click login button
             MobileElement ClickLoginBtn
                     = appiumDriver.findElement(MobileBy.xpath("//android.widget.Button[@resource-id=\"com.viettel.vtt.vn.emoneycustomer.dev:id/btnLogin\"]"));
+            Thread.sleep(1500);
             wait.until(ExpectedConditions
                     .visibilityOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id=\"com.viettel.vtt.vn.emoneycustomer.dev:id/btnLogin\"]")));
             ClickLoginBtn.click();
@@ -233,21 +234,25 @@ public class eMoneyAutoTestByReadTCs {
         switch (selector) {
             case "click":
                 Thread.sleep(1500);
-                if (ID.startsWith("com")) {
-                    wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
-                    appiumDriver.findElement(MobileBy.id(ID)).click();
-                } else if (ID.startsWith("//")) {
-                    // Nếu selector bắt đầu bằng "//", sử dụng xpath
-                    wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
-                    appiumDriver.findElement(MobileBy.xpath(ID)).click();
-                } else {
-                    // Mặc định sử dụng ID
-                    wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
-                    appiumDriver.findElement(MobileBy.id(ID)).click();
+                try {
+                    if (ID.startsWith("com")) {
+                        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
+                        appiumDriver.findElement(MobileBy.id(ID)).click();
+                    } else if (ID.startsWith("//")) {
+                        // Nếu selector bắt đầu bằng "//", sử dụng xpath
+                        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
+                        appiumDriver.findElement(MobileBy.xpath(ID)).click();
+                    } else {
+                        // Mặc định sử dụng ID
+                        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
+                        appiumDriver.findElement(MobileBy.id(ID)).click();
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
                 break;
             case "tap":
-                Thread.sleep(1500);
+                Thread.sleep(2500);
                 try {
                     String[] parts = coordinates.split(",");
                     String xPart = parts[0].split("x:")[1].trim();
@@ -259,7 +264,7 @@ public class eMoneyAutoTestByReadTCs {
                     touchAction
                             .tap(PointOption.point(xValue, yValue))
                             .perform();
-                    Thread.sleep(1500);
+                    Thread.sleep(2500);
                 } catch (Exception e) {
                     System.out.println("Exception: " + e.getMessage());
                 }

@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/ReadTestcase/ResultType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/ReadTestcase/ReadTCsByExcel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/api_learning/eMoneyAutoTestByReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/api_learning/eMoneyAutoTestByReadTCs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/AppiumLaunchTestForEmoney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/AppiumLaunchTestForEmoney.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/handleGetSelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/handleGetSelector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +27,20 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;longnguyen2704&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="905537ec-5a58-4699-90cc-16b72a450985" />
+        <option name="url" value="https://github.com/longnguyen2704/AutomationTest.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -54,11 +64,11 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/SourceCode/LongAutomation/LongAppium/Appium_Mobile/src/test/java/src/driverForEmoney",
-    "project.structure.last.edited": "Modules",
+    "last_opened_file_path": "D:/SourceCode/LongAppium",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "project.structure.side.proportion": "0.27586207",
+    "settings.editor.selected.configurable": "configurable.group.build"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -162,5 +172,11 @@
       <updated>1699932270504</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:io.reactivex.rxjava3:rxjava" />
+    <option featureType="dependencySupport" implementationName="java:org.seleniumhq.selenium:selenium-java" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
   </component>
 </project>
