@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/eMoneyAutoTestByReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/eMoneyAutoTestByReadTCs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Report.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +54,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "17",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ADMIN/IdeaProjects/AutomationTest",
+    "last_opened_file_path": "D:/SourceCode/LongAppium/AutomationTest",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
