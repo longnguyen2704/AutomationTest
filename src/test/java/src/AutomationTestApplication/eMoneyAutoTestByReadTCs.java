@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report{
+public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report {
     public static void main(String[] args) {
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForEmoney.getDriver(Platform.ANDROID);
         WebDriverWait wait = new WebDriverWait(appiumDriver, 5L);
@@ -24,6 +24,8 @@ public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report{
             MobileElement HomeScreenEmoney = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/iv_logo"));
             wait.until(ExpectedConditions.visibilityOf(HomeScreenEmoney));
             Thread.sleep(1500);
+
+            
 
             //Read testcase here
             try {
@@ -51,9 +53,6 @@ public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report{
 
         String reportFilePath = "TestingReport_" + datePart + ".txt";
         Report.exportReport(yamlFilePath1, reportFilePath);
-
-        String request = "Sample API request";
-        String response = "Sample API response";
     }
 
     private static void readTestDataFromYAML(String yamlFilePath, AppiumDriver<MobileElement> appiumDriver) throws InterruptedException {
@@ -102,41 +101,21 @@ public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report{
                     wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                     appiumDriver.findElement(MobileBy.id(ID)).click();
                     Thread.sleep(500);
-                    if (ID.startsWith("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title")) {
-                        appiumDriver.findElement(MobileBy.id(ID)).isDisplayed();
-                        System.out.println("System error. Please try again!");
-                        return;
-                    }
                 } else if (ID.startsWith("//")) {
                     //Nếu selector bắt đầu bằng "//", sử dụng xpath
                     wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
                     appiumDriver.findElement(MobileBy.xpath(ID)).click();
                     Thread.sleep(500);
-                    if (ID.startsWith("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title")) {
-                        appiumDriver.findElement(MobileBy.id(ID)).isDisplayed();
-                        System.out.println("System error. Please try again!");
-                        return;
-                    }
                 } else if (ID.startsWith("android.widget")) {
                     //Nếu selector bắt đầu bằng "android.widget", sử dụng class_name
                     wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(ID)));
                     appiumDriver.findElement(MobileBy.className(ID)).click();
                     Thread.sleep(500);
-                    if (ID.startsWith("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title")) {
-                        appiumDriver.findElement(MobileBy.id(ID)).isDisplayed();
-                        System.out.println("System error. Please try again!");
-                        return;
-                    }
                 } else {
                     //Mặc định sử dụng ID
                     wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                     appiumDriver.findElement(MobileBy.id(ID)).click();
                     Thread.sleep(500);
-                    if (ID.startsWith("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title")) {
-                        appiumDriver.findElement(MobileBy.id(ID)).isDisplayed();
-                        System.out.println("System error. Please try again!");
-                        return;
-                    }
                 }
                 break;
             case "tap":
@@ -161,40 +140,20 @@ public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report{
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                         appiumDriver.findElement(MobileBy.id(ID)).sendKeys(inputData);
                         Thread.sleep(500);
-                        if (ID.startsWith("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title")) {
-                            appiumDriver.findElement(MobileBy.id(ID)).isDisplayed();
-                            System.out.println("System error. Please try again!");
-                            return;
-                        }
                     } else if (ID.startsWith("//")) {
                         //Nếu selector bắt đầu bằng "//", sử dụng xpath
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
                         appiumDriver.findElement(MobileBy.xpath(ID)).sendKeys(inputData);
                         Thread.sleep(500);
-                        if (ID.startsWith("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title")) {
-                            appiumDriver.findElement(MobileBy.id(ID)).isDisplayed();
-                            System.out.println("System error. Please try again!");
-                            return;
-                        }
                     } else if (ID.startsWith("android.widget")) {
                         //Nếu selector bắt đầu bằng "android.widget", sử dụng class_name
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(ID)));
                         appiumDriver.findElement(MobileBy.className(ID)).sendKeys(inputData);
                         Thread.sleep(500);
-                        if (ID.startsWith("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title")) {
-                            appiumDriver.findElement(MobileBy.id(ID)).isDisplayed();
-                            System.out.println("System error. Please try again!");
-                            return;
-                        }
                     } else {
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                         appiumDriver.findElement(MobileBy.id(ID)).sendKeys(inputData);
                         Thread.sleep(500);
-                        if (ID.startsWith("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title")) {
-                            appiumDriver.findElement(MobileBy.id(ID)).isDisplayed();
-                            System.out.println("System error. Please try again!");
-                            return;
-                        }
                     }
                 } catch (Exception e) {
                     System.out.println("Exception: " + e.getMessage());
