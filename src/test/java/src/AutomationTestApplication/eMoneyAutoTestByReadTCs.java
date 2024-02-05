@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report {
+public class eMoneyAutoTestByReadTCs implements Report {
     public static void main(String[] args) {
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForEmoney.getDriver(Platform.ANDROID);
         WebDriverWait wait = new WebDriverWait(appiumDriver, 5L);
@@ -25,7 +25,6 @@ public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report {
             wait.until(ExpectedConditions.visibilityOf(HomeScreenEmoney));
             Thread.sleep(1500);
 
-            
 
             //Read testcase here
             try {
@@ -40,22 +39,19 @@ public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //Chụp screen
-//      TakeScreenShot.takeScreenshot(appiumDriver, "appium_screenshot.png");
-
         //Xuất report tại IntelliJ
         String yamlFilePath1 = "D:\\CaseDifferentReceiverNumber.yaml";
-
-        String timestamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
-        String[] parts = timestamp.split("_"); // Tách chuỗi theo dấu gạch dưới
-        String datePart = parts[0]; // Phần ngày tháng năm
-
-        String reportFilePath = "TestingReport_" + datePart + ".txt";
-        Report.exportReport(yamlFilePath1, reportFilePath);
+//
+//        String timestamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
+//        String[] parts = timestamp.split("_"); // Tách chuỗi theo dấu gạch dưới
+//        String datePart = parts[0]; // Phần ngày tháng năm
+//
+//        String reportFilePath = "TestingReport_" + datePart + ".txt";
+//        Report.exportReport(yamlFilePath1, reportFilePath);
     }
 
     private static void readTestDataFromYAML(String yamlFilePath, AppiumDriver<MobileElement> appiumDriver) throws InterruptedException {
+        boolean shouldStopReading = false;
         try (InputStream inputStream = new FileInputStream(yamlFilePath)) {
             Yaml yaml = new Yaml();
             Object yamlObject = yaml.load(inputStream);
@@ -63,9 +59,50 @@ public class eMoneyAutoTestByReadTCs implements TakeScreenShot, Report {
                 Map<String, List<Map<String, String>>> testData = (Map<String, List<Map<String, String>>>) yamlObject;
                 // Tiếp tục xử lý dữ liệu YAML ở đây
                 for (Map.Entry<String, List<Map<String, String>>> entry : testData.entrySet()) {
+                    if (shouldStopReading) {
+                        continue; // Đọc tiếp nếu đã xuất hiện phần tử pinElements
+                    }
                     String testCaseName = entry.getKey();
                     List<Map<String, String>> testStep = entry.getValue();
                     performTestSteps(appiumDriver, testCaseName, testStep);
+                    try {
+                        // Tìm và kiểm tra sự hiện diện của phần tử nhập PIN
+                        List<MobileElement> pinElements = appiumDriver.findElements(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/edtPass"));
+                        if (!pinElements.isEmpty()) {
+                            MobileElement pinElement = pinElements.get(0);
+                            // Nếu phần tử nhập PIN xuất hiện, thực hiện các hành động tương ứng
+                            if (pinElement.isDisplayed() || pinElement.isEnabled()) {
+                                // Thực hiện các hành động cần thiết với phần tử nhập PIN
+                                pinElement.sendKeys("040100");
+                                Thread.sleep(1500);
+                                // Click button Login sau khi nhập PIN
+                                MobileElement clickButtonLogin = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/btnLogin"));
+                                if (clickButtonLogin.isDisplayed()) {
+                                    clickButtonLogin.click();
+                                }
+                                // Tắt chế độ nhận diện sinh trắc học tự động
+                                List<MobileElement> offBiometricElements = appiumDriver.findElements(MobileBy.xpath("//android.widget.TextView[@resource-id=\"com.viettel.vtt.vn.emoneycustomer.dev:id/md_buttonDefaultNegative\"]"));
+                                if (!offBiometricElements.isEmpty()) {
+                                    MobileElement offBiometric = offBiometricElements.get(0);
+                                    if (offBiometric.isDisplayed() || offBiometric.isEnabled()) {
+                                        // Đặt cờ này thành false để đọc tiếp YAML
+                                        shouldStopReading = false;
+                                        offBiometric.click();
+                                    }
+                                }
+                            }
+                        }
+                        List<MobileElement> buttonBackOfFeedBack = appiumDriver.findElements(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/imgCloseSurvey"));
+                        if (!buttonBackOfFeedBack.isEmpty()) {
+                            MobileElement buttonBackOfFeedBacks = buttonBackOfFeedBack.get(0);
+                            if (buttonBackOfFeedBacks.isDisplayed() || buttonBackOfFeedBacks.isEnabled()) {
+                                shouldStopReading = false;
+                                buttonBackOfFeedBacks.click();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             } else {
                 // Xử lý trường hợp không phải là Map
