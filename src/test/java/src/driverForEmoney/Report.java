@@ -14,14 +14,25 @@ public interface Report {
             Object yamlObject = yaml.load(inputStream);
             if (yamlObject instanceof Map) {
                 Map<String, List<Map<String, String>>> testData = (Map<String, List<Map<String, String>>>) yamlObject;
-                writer.write("<html><head><title>Test Report</title></head><body>");
+
+                writer.write("<html>");
+                writer.write("<head>");
+                writer.write("<title>Test Report</title>");
+                writer.write("<style>");
+                writer.write("table {border-collapse: collapse; width: 100%; table-layout: fixed;}");
+                writer.write("th, td {border: 1px solid #dddddd; text-align: left; padding: 8px; width: 20%; word-wrap: break-word; white-space: pre-wrap;}");
+                writer.write("tr:nth-child(even) {background-color: #f2f2f2;}");
+                writer.write("h2 {color: #333333;}");
+                writer.write("</style>");
+                writer.write("</head>");
+                writer.write("<body>");
 
                 for (Map.Entry<String, List<Map<String, String>>> entry : testData.entrySet()) {
                     String testCaseName = entry.getKey();
                     List<Map<String, String>> testSteps = entry.getValue();
 
                     writer.write("<h2>" + testCaseName + "</h2>");
-                    writer.write("<table border='1'>");
+                    writer.write("<table>");
                     writer.write("<tr>");
                     writer.write("<th>Action</th>");
                     writer.write("<th>ID</th>");
@@ -49,7 +60,9 @@ public interface Report {
                     writer.write("</table>");
                 }
 
-                writer.write("</body></html>");
+                writer.write("</body>");
+                writer.write("</html>");
+
                 System.out.println("Report exported successfully to " + htmlFilePath);
             }
         } catch (IOException e) {
