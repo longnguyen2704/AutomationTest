@@ -31,7 +31,7 @@ public interface Report {
                     String testCaseName = entry.getKey();
                     List<Map<String, String>> testSteps = entry.getValue();
 
-                    writer.write("<h2>" + testCaseName + "</h2>");
+                    writer.write("<h2>" + "Case: " + testCaseName + "</h2>");
                     writer.write("<table>");
                     writer.write("<tr>");
                     writer.write("<th>Action</th>");
@@ -46,7 +46,13 @@ public interface Report {
                         String ID = step.get("ID");
                         String inputData = step.get("inputData");
                         String coordinates = step.get("coordinates");
-                        String result = (!action.isEmpty() || !ID.isEmpty() || !inputData.isEmpty() || !coordinates.isEmpty()) ? "Success" : "Fail";
+                        String result = "";
+
+                        if (action == null || action.isEmpty() || ID == null || ID.isEmpty() || inputData == null || inputData.isEmpty() || coordinates == null || coordinates.isEmpty()) {
+                            result = "Success";
+                        } else {
+                            result = "Fail";
+                        }
 
                         writer.write("<tr>");
                         writer.write("<td>" + action + "</td>");
