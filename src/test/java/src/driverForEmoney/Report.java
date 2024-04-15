@@ -46,7 +46,7 @@ public interface Report {
                         String ID = step.get("ID");
                         String inputData = step.get("inputData");
                         String coordinates = step.get("coordinates");
-                        String result = "";
+                        String result;
 
                         if (action == null || action.isEmpty() || ID == null || ID.isEmpty() || inputData == null || inputData.isEmpty() || coordinates == null || coordinates.isEmpty()) {
                             result = "Success";

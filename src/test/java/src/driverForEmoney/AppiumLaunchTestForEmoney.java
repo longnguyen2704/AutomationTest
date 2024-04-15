@@ -19,7 +19,6 @@ public class AppiumLaunchTestForEmoney implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(APP_PACKAGE, "com.viettel.vtt.vn.emoneycustomer.dev");
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.viettel.vtt.vn.emoneycustomer.feature.splash.SplashActivity");
         desiredCapabilities.setCapability(NO_RESET, true);
-        //Log API
 
         // Specify Appium Server URL
         URL appiumServer = null;

@@ -19,6 +19,7 @@ public class DriverFactoryForCamID implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.metfone.selfcare");
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.metfone.selfcare.activity.HomeActivity");
+        desiredCapabilities.setCapability(NO_RESET, true);
 
         // Specify Appium Server URL
         URL appiumServer = null;

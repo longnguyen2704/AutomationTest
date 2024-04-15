@@ -19,6 +19,7 @@ public class AppiumLaunchTestForCamID implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.metfone.selfcare");
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.metfone.selfcare.activity.HomeActivity");
+        desiredCapabilities.setCapability(NO_RESET, true);
 
         // Specify Appium Server URL
         URL appiumServer = null;
@@ -28,7 +29,7 @@ public class AppiumLaunchTestForCamID implements MobileCapabilityTypeEx {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(appiumServer == null){
+        if (appiumServer == null) {
             throw new RuntimeException("[ERR] Somehow, we couldn't construct Appium server URL");
         }
         driver = new AndroidDriver<MobileElement>(appiumServer, desiredCapabilities);

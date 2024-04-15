@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/CamIDAutomationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/CamIDAutomationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/eMoneyAutoTestByReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/eMoneyAutoTestByReadTCs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/AppiumLaunchTestForCamID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForCamID/AppiumLaunchTestForCamID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/DriverFactoryForCamID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForCamID/DriverFactoryForCamID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/AppiumLaunchTestForEmoney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/AppiumLaunchTestForEmoney.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Report.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,10 +155,10 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ReportByHTML" />
       <item itemvalue="Application.EmoneyAutomationTest" />
-      <item itemvalue="Application.eMoneyAutoTestByReadTCs" />
       <item itemvalue="Application.ReadTCsByYAML" />
+      <item itemvalue="Application.ReportByHTML" />
+      <item itemvalue="Application.eMoneyAutoTestByReadTCs" />
       <item itemvalue="TestNG.eMoneyAutoTestByReadTCs.autoTestEmoney" />
     </list>
     <recent_temporary>
