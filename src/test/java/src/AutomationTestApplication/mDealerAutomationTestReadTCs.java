@@ -1,40 +1,77 @@
 package src.AutomationTestApplication;
 
-import org.yaml.snakeyaml.Yaml;
-import io.appium.java_client.*;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import src.driverForEmoney.*;
+import org.yaml.snakeyaml.Yaml;
+import src.driverForMdealer.Platform;
+import src.driverForMdealer.Report;
+import src.driverForMdealer.DriverFactoryForMdealer;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-
-public class eMoneyAutoTestByReadTCs implements Report {
+public class mDealerAutomationTestReadTCs {
     public static void main(String[] args) {
-        AppiumDriver<MobileElement> appiumDriver = DriverFactoryForEmoney.getDriver(Platform.ANDROID);
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 5L);
+        AppiumDriver<MobileElement> appiumDriver = DriverFactoryForMdealer.getDriver(Platform.ANDROID);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 10L);
         try {
-            //Home screen eMoney
-            MobileElement HomeScreenEmoney = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/icTabbarHome"));
-            wait.until(ExpectedConditions.visibilityOf(HomeScreenEmoney));
+            //Home screen mDealer
+            MobileElement HomeScreenMdealer = appiumDriver.findElement(MobileBy.id("com.metfone.mdealer:id/image_hot_announcement"));
+            wait.until(ExpectedConditions.visibilityOf(HomeScreenMdealer));
             Thread.sleep(1500);
-
-            //Xử lý các thứ liên quan về file YAML
             try {
-                // Đọc dữ liệu từ file YAML
-                String yamlFilePath1 = "D:\\ExceedTransfer.yaml";
+                //Xử lí case mỗi lần vô app Mdealer
+                MobileElement clickButtonX = appiumDriver.findElement(MobileBy.id("com.metfone.mdealer:id/image_hot_announcement_close"));
+                clickButtonX.click();
+                //Xử lí Phone number
+                List<MobileElement> phoneNumber = appiumDriver.findElements(MobileBy.id("com.metfone.mdealer:id/editText_phone_number"));
+                if (!phoneNumber.isEmpty()) {
+                    MobileElement phoneNumbers = phoneNumber.get(0);
+                    if (phoneNumbers.isDisplayed() && phoneNumbers.getText().isEmpty()) {
+                        phoneNumbers.sendKeys("716657808");
+                        wait.until(ExpectedConditions.visibilityOf(phoneNumbers));
+                    }
+                    Thread.sleep(1000);
+                }
+                //Xử lí Password
+                MobileElement Password = appiumDriver.findElement(MobileBy.id("com.metfone.mdealer:id/editText_passWord"));
+                Password.sendKeys("020990");
+                Thread.sleep(1000);
+
+                //Xử lí button Login
+                MobileElement buttonLogin = appiumDriver.findElement(MobileBy.id("com.metfone.mdealer:id/btn_login"));
+                buttonLogin.click();
+                Thread.sleep(1000);
+
+                //Xử lí màn Home
+                MobileElement PopupWarning = appiumDriver.findElement(MobileBy.id("com.metfone.mdealer:id/txtMessage"));
+                wait.until(ExpectedConditions.visibilityOf(PopupWarning));
+                MobileElement buttonClosePopup = appiumDriver.findElement(MobileBy.id("com.metfone.mdealer:id/btnClose"));
+                if (PopupWarning.isDisplayed()) {
+                    buttonClosePopup.click();
+                }
+                MobileElement HomeScreen = appiumDriver.findElement(MobileBy.id("com.metfone.mdealer:id/imageView_openSlider"));
+                wait.until(ExpectedConditions.visibilityOf(HomeScreen));
+            } catch (InterruptedException e) {
+                e.getMessage();
+            }
+            //Xử lí đọc file YAML
+            try {
+                String yamlFilePath1 = "D:\\ekyc.yaml";
                 readTestDataFromYAML(yamlFilePath1, appiumDriver);
                 //Xuất report
-//                String reportFilePath = "TestingReport" + ".txt";
                 String htmlFilePath = "D:\\report.html";
                 Report.exportReport(yamlFilePath1, htmlFilePath);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                System.err.println("Đã xảy ra lỗi trong quá trình đọc dữ liệu từ file YAML: " + e.getMessage());
+                System.err.println("System error. Please try again" + e.getMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,7 +79,7 @@ public class eMoneyAutoTestByReadTCs implements Report {
     }
 
     private static void readTestDataFromYAML(String yamlFilePath, AppiumDriver<MobileElement> appiumDriver) throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 5L);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 10L);
         try (InputStream inputStream = new FileInputStream(yamlFilePath)) {
             Yaml yaml = new Yaml();
             Object yamlObject = yaml.load(inputStream);
@@ -53,69 +90,7 @@ public class eMoneyAutoTestByReadTCs implements Report {
                     String testCaseName = entry.getKey();
                     List<Map<String, String>> testStep = entry.getValue();
                     performTestSteps(appiumDriver, testCaseName, testStep);
-                    try {
-                        // Nếu như đang đọc file YAML mà bị hết session thì xử lí trong đây
-                        List<MobileElement> phoneNumber = appiumDriver.findElements(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/edtPhone"));
-                        if (!phoneNumber.isEmpty()) {
-                            MobileElement phoneNumbers = phoneNumber.get(0);
-                            if (phoneNumbers.isDisplayed() && phoneNumbers.getText().isEmpty()) {
-                                phoneNumbers.sendKeys("0315445204");
-                                wait.until(ExpectedConditions.visibilityOf(phoneNumbers));
-                            }
-                            //Enter PIN
-                            MobileElement pinElem = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/edtPass"));
-                            if (pinElem.isDisplayed()) {
-                                wait.until(ExpectedConditions.visibilityOf(pinElem));
-                                pinElem.sendKeys("040100");
-                            }
-                            // Click button Login sau khi nhập PIN
-                            MobileElement clickButtonLogin = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/btnLogin"));
-                            if (clickButtonLogin.isDisplayed()) {
-                                wait.until(ExpectedConditions.visibilityOf(clickButtonLogin));
-                                clickButtonLogin.click();
-                            }
-                            List<MobileElement> enterOTPElement = appiumDriver.findElements(MobileBy.id("android:id/input"));
-                            if (!enterOTPElement.isEmpty()) {
-                                MobileElement enterOTP = enterOTPElement.get(0);
-                                if (enterOTP.isDisplayed()) {
-                                    wait.until(ExpectedConditions.visibilityOf(enterOTP));
-                                    enterOTP.sendKeys("1234");
-                                }
-                                MobileElement clickBtnContinue = appiumDriver.findElement(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/md_buttonDefaultPositive"));
-                                if (clickBtnContinue.isDisplayed()) {
-                                    wait.until(ExpectedConditions.visibilityOf(clickBtnContinue));
-                                    clickBtnContinue.click();
-                                }
-                            }
-                        }
-                        List <MobileElement> offBiometricElements = appiumDriver.findElements(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/md_buttonDefaultNegative"));
-                        if (!offBiometricElements.isEmpty()) {
-                            MobileElement offBiometric = offBiometricElements.get(0);
-                            wait.until(ExpectedConditions.visibilityOf(offBiometric));
-                            offBiometric.click();
-                        }
-                        List <MobileElement> buttonBackOfFeedBack = appiumDriver.findElements(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/imgCloseSurvey"));
-                        if (buttonBackOfFeedBack.isEmpty()) {
-                            MobileElement buttonOffFeedback = buttonBackOfFeedBack.get(0);
-                            wait.until(ExpectedConditions.visibilityOf(buttonOffFeedback));
-                            buttonOffFeedback.click();
-                        }
-                        List <MobileElement> popUpError = appiumDriver.findElements(MobileBy.id("com.viettel.vtt.vn.emoneycustomer.dev:id/txt_title"));
-                        if (popUpError.isEmpty()) {
-                            MobileElement popUpErrors = popUpError.get(0);
-                            wait.until(ExpectedConditions.visibilityOf(popUpErrors));
-                        }
-                        else {
-                            return;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
-            } else {
-                // Xử lý trường hợp không phải là Map
-                System.out.println("Dữ liệu YAML không đúng định dạng.");
-                System.out.println("===> " + yamlFilePath + ": run fail");
             }
         } catch (Exception e) {
             e.printStackTrace();
