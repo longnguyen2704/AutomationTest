@@ -18,7 +18,7 @@ public class AppiumLaunchTestForMdealer implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.metfone.mdealer");
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.metfone.mdealer.login.Login");
-        desiredCapabilities.setCapability(NO_RESET, true);
+        desiredCapabilities.setCapability(NO_RESET, false);
 
         // Specify Appium Server URL
         URL appiumServer = null;
