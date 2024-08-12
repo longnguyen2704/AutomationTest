@@ -7,8 +7,11 @@
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/mDealerAutomationTestReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/mDealerAutomationTestReadTCs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/AppiumLaunchTestForCamID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForCamID/AppiumLaunchTestForCamID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/AppiumLaunchTestForEmoney.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/AppiumLaunchTestForEmoney.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/AppiumLaunchTestForMdealer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/AppiumLaunchTestForMdealer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/DriverFactoryForMdealer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/DriverFactoryForMdealer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/Report.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +50,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Application.ReportByHTML.executor": "Run",
+    "Application.downloadAppCenter.executor": "Run",
     "Application.eMoneyAutoTestByReadTCs.executor": "Run",
     "Application.mDealerAutomationTestReadTCs.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -62,7 +66,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -83,8 +87,8 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.mDealerAutomationTestReadTCs">
-    <configuration name="EmoneyAutomationTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="src.api_learning.EmoneyAutomationTest" />
+    <configuration name="ReportByHTML" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="src.driverForEmoney.ReportByHTML" />
       <module name="Appium_Mobile" />
       <extension name="coverage">
         <pattern>
@@ -96,12 +100,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReportByHTML" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="src.driverForEmoney.ReportByHTML" />
+    <configuration name="downloadAppCenter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="src.driverForMdealer.downloadAppCenter" />
       <module name="Appium_Mobile" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="src.driverForEmoney.*" />
+          <option name="PATTERN" value="src.driverForMdealer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -154,19 +158,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.mDealerAutomationTestReadTCs" />
-      <item itemvalue="Application.EmoneyAutomationTest" />
       <item itemvalue="Application.ReportByHTML" />
       <item itemvalue="Application.eMoneyAutoTestByReadTCs" />
+      <item itemvalue="Application.mDealerAutomationTestReadTCs" />
+      <item itemvalue="Application.downloadAppCenter" />
       <item itemvalue="TestNG.eMoneyAutoTestByReadTCs.autoTestEmoney" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.mDealerAutomationTestReadTCs" />
+        <item itemvalue="Application.downloadAppCenter" />
+        <item itemvalue="TestNG.eMoneyAutoTestByReadTCs.autoTestEmoney" />
         <item itemvalue="Application.eMoneyAutoTestByReadTCs" />
         <item itemvalue="Application.ReportByHTML" />
-        <item itemvalue="TestNG.eMoneyAutoTestByReadTCs.autoTestEmoney" />
-        <item itemvalue="Application.EmoneyAutomationTest" />
       </list>
     </recent_temporary>
   </component>
@@ -174,6 +178,7 @@
     <attachedChunks>
       <set>
         <option value="jdk-17.0.9-corretto-17.0.9-e1d2075fd9a7-f66d43ae" />
+        <option value="jdk-22-openjdk-22-3183f394aec4-bad0321e" />
       </set>
     </attachedChunks>
   </component>

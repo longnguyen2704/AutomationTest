@@ -11,7 +11,6 @@ import java.net.URL;
 public class DriverFactoryForMdealer implements MobileCapabilityTypeEx {
     public static AppiumDriver<MobileElement> getDriver(Platform platform) {
         AppiumDriver<MobileElement> driver;
-
         // Desired Caps
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability(PLATFORM_NAME, "Android");

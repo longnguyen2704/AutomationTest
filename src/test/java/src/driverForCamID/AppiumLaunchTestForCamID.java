@@ -32,7 +32,7 @@ public class AppiumLaunchTestForCamID implements MobileCapabilityTypeEx {
         if (appiumServer == null) {
             throw new RuntimeException("[ERR] Somehow, we couldn't construct Appium server URL");
         }
-        driver = new AndroidDriver<MobileElement>(appiumServer, desiredCapabilities);
+        driver = new AndroidDriver<>(appiumServer, desiredCapabilities);
 
         // Debug purpose only
         Thread.sleep(3000);

@@ -9,8 +9,7 @@ import java.net.URL;
 
 public class AppiumLaunchTestForMdealer implements MobileCapabilityTypeEx {
     public static void main(String[] args) throws InterruptedException {
-        AppiumDriver<MobileElement> driver = null;
-
+        AppiumDriver<MobileElement> driver;
         //Desired caps
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability(PLATFORM_NAME, "Android");
@@ -31,7 +30,7 @@ public class AppiumLaunchTestForMdealer implements MobileCapabilityTypeEx {
         if (appiumServer == null) {
             throw new RuntimeException("[ERR] Somehow, we couldn't construct Appium server URL");
         }
-        driver = new AndroidDriver<MobileElement>(appiumServer, desiredCapabilities);
+        driver = new AndroidDriver<>(appiumServer, desiredCapabilities);
 
         // Debug purpose only
         Thread.sleep(3000);

@@ -1,13 +1,17 @@
 package src.driverForMdealer;
 
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.util.List;
 import java.util.Map;
 
+
 public interface Report {
     static void exportReport(String yamlFilePath, String htmlFilePath) {
+        AppiumDriver<MobileElement> appiumDriver = DriverFactoryForMdealer.getDriver(Platform.ANDROID);
         try (InputStream inputStream = new FileInputStream(yamlFilePath);
              BufferedWriter writer = new BufferedWriter(new FileWriter(htmlFilePath))) {
             Yaml yaml = new Yaml();
@@ -30,6 +34,7 @@ public interface Report {
                 for (Map.Entry<String, List<Map<String, String>>> entry : testData.entrySet()) {
                     String testCaseName = entry.getKey();
                     List<Map<String, String>> testSteps = entry.getValue();
+                    String result = "Null";
 
                     writer.write("<h2>" + "Case: " + testCaseName + "</h2>");
                     writer.write("<table>");
@@ -46,13 +51,8 @@ public interface Report {
                         String ID = step.get("ID");
                         String inputData = step.get("inputData");
                         String coordinates = step.get("coordinates");
-                        String result;
 
-                        if (action == null || action.isEmpty() || ID == null || ID.isEmpty() || inputData == null || inputData.isEmpty() || coordinates == null || coordinates.isEmpty()) {
-                            result = "Fail";
-                        } else {
-                            result = "Success";
-                        }
+
 
                         writer.write("<tr>");
                         writer.write("<td>" + action + "</td>");
@@ -62,13 +62,9 @@ public interface Report {
                         writer.write("<td>" + result + "</td>");
                         writer.write("</tr>");
                     }
-
-                    writer.write("</table>");
                 }
-
                 writer.write("</body>");
                 writer.write("</html>");
-
                 System.out.println("Report exported successfully to " + htmlFilePath);
             }
         } catch (IOException e) {
