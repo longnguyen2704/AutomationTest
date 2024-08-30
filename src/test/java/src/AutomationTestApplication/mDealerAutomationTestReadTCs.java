@@ -110,6 +110,7 @@ public class mDealerAutomationTestReadTCs {
                     }
                 }
                 System.out.println("All test cases completed successfully.");
+                isYamlProcessed = true;
             } else {
                 throw new IllegalArgumentException("Invalid YAML file format. Expected a map of test cases.");
             }
@@ -120,7 +121,6 @@ public class mDealerAutomationTestReadTCs {
 
     public static void performTestSteps(AppiumDriver<MobileElement> appiumDriver, String testCaseName, List<Map<String, String>> testStep) throws InterruptedException {
         //Vòng lặp qua các bước kiểm thử trong Testcase
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 10L);
         System.out.println("=====" + testCaseName + "=====");
         for (Map<String, String> step : testStep) {
             String action = step.get("action");
@@ -133,9 +133,9 @@ public class mDealerAutomationTestReadTCs {
         }
     }
 
-    public static void performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) throws InterruptedException {
+    public static boolean performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) {
         String selector = action.toLowerCase();
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 10L);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 60L);
         switch (selector) {
             case "click":
                 try {
@@ -143,22 +143,18 @@ public class mDealerAutomationTestReadTCs {
                     if (ID.startsWith("com")) {
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                         appiumDriver.findElement(MobileBy.id(ID)).click();
-                        Thread.sleep(500);
                     } else if (ID.startsWith("//")) {
                         //Nếu selector bắt đầu bằng "//", sử dụng xpath
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
                         appiumDriver.findElement(MobileBy.xpath(ID)).click();
-                        Thread.sleep(500);
                     } else if (ID.startsWith("android.widget")) {
                         //Nếu selector bắt đầu bằng "android.widget", sử dụng class_name
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(ID)));
                         appiumDriver.findElement(MobileBy.className(ID)).click();
-                        Thread.sleep(500);
                     } else {
                         //Mặc định sử dụng ID
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                         appiumDriver.findElement(MobileBy.id(ID)).click();
-                        Thread.sleep(500);
                     }
                 } catch (Exception e) {
                     System.out.println("Exception: " + e.getMessage());
@@ -179,27 +175,22 @@ public class mDealerAutomationTestReadTCs {
                 }
                 break;
             case "value":
-                Thread.sleep(500);
                 try {
                     if (ID.startsWith("com")) {
                         //Nếu selector bắt đầu bằng "com", sử dụng resource-id
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                         appiumDriver.findElement(MobileBy.id(ID)).sendKeys(inputData);
-                        Thread.sleep(500);
                     } else if (ID.startsWith("//")) {
                         //Nếu selector bắt đầu bằng "//", sử dụng xpath
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
                         appiumDriver.findElement(MobileBy.xpath(ID)).sendKeys(inputData);
-                        Thread.sleep(500);
                     } else if (ID.startsWith("android.widget")) {
                         //Nếu selector bắt đầu bằng "android.widget", sử dụng class_name
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(ID)));
                         appiumDriver.findElement(MobileBy.className(ID)).sendKeys(inputData);
-                        Thread.sleep(500);
                     } else {
                         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
                         appiumDriver.findElement(MobileBy.id(ID)).sendKeys(inputData);
-                        Thread.sleep(500);
                     }
                 } catch (Exception e) {
                     System.out.println("Exception: " + e.getMessage());
@@ -209,5 +200,6 @@ public class mDealerAutomationTestReadTCs {
                 appiumDriver.findElement(MobileBy.id(ID));
                 break;
         }
+        return true;
     }
 }

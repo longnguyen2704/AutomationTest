@@ -8,6 +8,8 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
+import static src.AutomationTestApplication.mDealerAutomationTestReadTCs.performAction;
+
 
 public interface Report {
     static void exportReport(String yamlFilePath, String htmlFilePath) {
@@ -34,7 +36,7 @@ public interface Report {
                 for (Map.Entry<String, List<Map<String, String>>> entry : testData.entrySet()) {
                     String testCaseName = entry.getKey();
                     List<Map<String, String>> testSteps = entry.getValue();
-                    String result = "Null";
+                    String result = "Success";  //Default success
 
                     writer.write("<h2>" + "Case: " + testCaseName + "</h2>");
                     writer.write("<table>");
@@ -51,8 +53,20 @@ public interface Report {
                         String ID = step.get("ID");
                         String inputData = step.get("inputData");
                         String coordinates = step.get("coordinates");
+                        String stepResult = "Success";  //Default success
 
+                        try {
+                            // Gọi hàm thực hiện hành động với các thông số action, ID, inputData, coordinates
+                            boolean stepSuccess = performAction(appiumDriver, action, ID, inputData, coordinates);
 
+                            if (!stepSuccess) {
+                                stepResult = "Fail";
+                                result = "Fail";  // Gán kết quả tổng thể của testCase là Fail nếu có bước thất bại
+                            }
+                        } catch (Exception e) {
+                            stepResult = "Fail";
+                            result = "Fail";  // Gán kết quả tổng thể của testCase là Fail nếu có ngoại lệ xảy ra
+                        }
 
                         writer.write("<tr>");
                         writer.write("<td>" + action + "</td>");
