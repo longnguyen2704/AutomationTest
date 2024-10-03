@@ -5,9 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/mDealerAutomationTestReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/mDealerAutomationTestReadTCs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/CamIDAutomationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/eMoneyAutoTestByReadTCs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/AppiumLaunchTestForCamID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/AppiumLaunchTestForHiFPT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/DriverFactoryForCamID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/DriverFactoryForHiFPT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/MobileCapabilityTypeEx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/MobileCapabilityTypeEx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/Platform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/AppiumLaunchTestForEmoney.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/MobileCapabilityTypeEx.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Platform.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/Report.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +69,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Selenium/buff-view-website-feature-find-href-in-all-page&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/SourceCode/LongAppium/AutomationTest/src/test/java/src/driverForHiFPT&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -67,28 +78,30 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SourceCode\LongAppium\AutomationTest\src\test\java\src\driverForHiFPT" />
+      <recent name="D:\SourceCode\LongAppium\AutomationTest\src\test\java\src" />
       <recent name="C:\Users\ADMIN\IdeaProjects\AutomationTest\src\test\java\src\driverForMdealer" />
       <recent name="C:\Users\ADMIN\IdeaProjects\AutomationTest" />
       <recent name="D:\SourceCode\LongAutomation\LongAppium\Appium_Mobile\src\test\java\src\driverForEmoney" />
-      <recent name="D:\SourceCode\LongAutomation\LongAppium\Appium_Mobile\src\test\java\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\SourceCode\LongAutomation\LongAppium\Appium_Mobile\mylibrary\src\main" />
       <recent name="D:\SourceCode\LongAutomation\LongAppium\Appium_Mobile\src\test\java\src" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="src.AutomationTestApplication" />
       <recent name="src.driver" />
       <recent name="src.api_learning" />
       <recent name="src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.mDealerAutomationTestReadTCs">
-    <configuration name="ReportByHTML" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="src.driverForEmoney.ReportByHTML" />
+  <component name="RunManager" selected="Application.HiFPTAutomationTestReadTCs">
+    <configuration name="HiFPTAutomationTestReadTCs" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="src.AutomationTestApplication.HiFPTAutomationTestReadTCs" />
       <module name="Appium_Mobile" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="src.driverForEmoney.*" />
+          <option name="PATTERN" value="src.AutomationTestApplication.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -154,7 +167,7 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ReportByHTML" />
+      <item itemvalue="Application.HiFPTAutomationTestReadTCs" />
       <item itemvalue="Application.downloadAppCenter" />
       <item itemvalue="Application.eMoneyAutoTestByReadTCs" />
       <item itemvalue="Application.mDealerAutomationTestReadTCs" />
@@ -162,11 +175,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.HiFPTAutomationTestReadTCs" />
         <item itemvalue="Application.mDealerAutomationTestReadTCs" />
         <item itemvalue="Application.downloadAppCenter" />
         <item itemvalue="TestNG.eMoneyAutoTestByReadTCs.autoTestEmoney" />
         <item itemvalue="Application.eMoneyAutoTestByReadTCs" />
-        <item itemvalue="Application.ReportByHTML" />
       </list>
     </recent_temporary>
   </component>
@@ -202,5 +215,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.yaml.snakeyaml.error.YAMLException" package="org.yaml.snakeyaml.error" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
