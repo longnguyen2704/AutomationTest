@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/CamIDAutomationTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/eMoneyAutoTestByReadTCs.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/AppiumLaunchTestForCamID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/AppiumLaunchTestForHiFPT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/DriverFactoryForCamID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/DriverFactoryForHiFPT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/MobileCapabilityTypeEx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/MobileCapabilityTypeEx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForCamID/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/Platform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/AppiumLaunchTestForEmoney.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/DriverFactoryForEmoney.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/MobileCapabilityTypeEx.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Platform.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForEmoney/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/mDealerAutomationTestReadTCs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/AppiumLaunchTestForHiFPT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/AppiumLaunchTestForHiFPT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/DriverFactoryForHiFPT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/DriverFactoryForHiFPT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/AppiumLaunchTestForMdealer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/DriverFactoryForMdealer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/MobileCapabilityTypeEx.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/Platform.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForMdealer/Report.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +38,6 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
-}</component>
   <component name="ProjectId" id="2Y9KHw6ffV1V8qfGs5cnCU17CsS" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -53,29 +46,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.ReportByHTML.executor&quot;: &quot;Run&quot;,
-    &quot;Application.downloadAppCenter.executor&quot;: &quot;Run&quot;,
-    &quot;Application.eMoneyAutoTestByReadTCs.executor&quot;: &quot;Run&quot;,
-    &quot;Application.mDealerAutomationTestReadTCs.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;TestNG.eMoneyAutoTestByReadTCs.autoTestEmoney.executor&quot;: &quot;Run&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/SourceCode/LongAppium/AutomationTest/src/test/java/src/driverForHiFPT&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "main"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\SourceCode\LongAppium\AutomationTest\src\test\java\src\driverForHiFPT" />

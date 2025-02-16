@@ -16,7 +16,7 @@ public class AppiumLaunchTestForHiFPT implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(AUTOMATION_NAME, "uiautomator2");
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.rad.hifpt");
-        desiredCapabilities.setCapability(APP_ACTIVITY, "com.rad.hifpt.screens_boarding.activities.SplashActivity");
+        desiredCapabilities.setCapability(APP_ACTIVITY, "com.rad.hifpt.activities.MainAppActivity");
         //desiredCapabilities.setCapability(NO_RESET, true);
 
         // Specify Appium Server URL

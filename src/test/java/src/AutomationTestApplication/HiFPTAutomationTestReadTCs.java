@@ -17,106 +17,112 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class HiFPTAutomationTestReadTCs {
-    public static void tapByCoordinates(AppiumDriver<MobileElement> appiumDriver, int x, int y) {
-        TouchAction<?> touchAction = new TouchAction<>(appiumDriver);
-        touchAction.tap(PointOption.point(x, y)).perform();
-    }
 
     public static void main(String[] args) {
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForHiFPT.getDriver(Platform.ANDROID);
         WebDriverWait wait = new WebDriverWait(appiumDriver, 60L);
 
         try {
+            System.out.println("Start running Auto Test");
+
+            // Xử lý các bước kiểm thử cơ bản như đăng nhập
+            try {
+                MobileElement loginScreen =
+                        (MobileElement) wait.until
+                                (ExpectedConditions.visibilityOfElementLocated
+                                        (MobileBy.xpath("//android.widget.EditText")));
+                if (loginScreen.isDisplayed()) {
+                    loginScreen.sendKeys("0775892638");
+
+//                    MobileElement buttonContinue =
+//                            (MobileElement) wait.until
+//                                    (ExpectedConditions.visibilityOfElementLocated
+//                                            (MobileBy.xpath("//android.widget.Button")));
+//                    if (buttonContinue.isEnabled()) {
+//                        buttonContinue.click();
+//                    }
+                }
+            } catch (Exception e) {
+                System.out.println("System error! Please try again");
+            }
 
             try {
-                // Xử lý các bước kiểm thử cơ bản như đăng nhập
-                MobileElement loginScreen = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/edtPhone")));
-                if (loginScreen.isDisplayed()) {
-                    loginScreen.sendKeys("0764543021");
-
-                    MobileElement buttonContinue = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/btnContinue")));
-                    if (buttonContinue.isEnabled()) {
-                        buttonContinue.click();
+                MobileElement inputPIN =
+                        (MobileElement) wait.until
+                                (ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath
+                                        ("//android.widget.TextView[@text=\"Nhập mã PIN của bạn\"]")));
+                if (inputPIN.isDisplayed()) {
+                    MobileElement clickOutside =
+                            (MobileElement) wait.until
+                                    (ExpectedConditions.visibilityOfElementLocated
+                                            (MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout")));
+                    clickOutside.click();
+                    // Input PIN
+                    String otp = "123456";
+                    for (char digit : otp.toCharArray()) {
+                        Runtime.getRuntime().exec("adb shell input text " + digit);
+                        Thread.sleep(1000); // Chờ giữa các lần nhập
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Not found element. Continuing with the next steps.");
+                System.out.println("System error! Please try again");
             }
-            System.out.println("Continue...");
 
             try {
-                MobileElement OTPScreen = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/lblPass")));
-                if (OTPScreen.isDisplayed()) {
-                    MobileElement VerifyCode = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/view1")));
-                    VerifyCode.click();
-                    //Click PIN number: 1
-                    int x1 = 151;
-                    int y1 = 1620;
-                    tapByCoordinates(appiumDriver, x1, y1);
-                    //Click PIN number: 2
-                    int x2 = 418;
-                    int y2 = 1620;
-                    tapByCoordinates(appiumDriver, x2, y2);
-                    //Click PIN number: 3
-                    int x3 = 670;
-                    int y3 = 1620;
-                    tapByCoordinates(appiumDriver, x3, y3);
-                    //Click PIN number: 4
-                    int x4 = 151;
-                    int y4 = 1808;
-                    tapByCoordinates(appiumDriver, x4, y4);
-                    //Click PIN number: 5
-                    int x5 = 431;
-                    int y5 = 1808;
-                    tapByCoordinates(appiumDriver, x5, y5);
-                    //Click PIN number: 6
-                    int x6 = 675;
-                    int y6 = 1808;
-                    tapByCoordinates(appiumDriver, x6, y6);
+                MobileElement inputOTP =
+                        (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated
+                                (MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout")));
+                inputOTP.click();
+                // Input PIN
+                String pin = "1309";
+                for (char digit : pin.toCharArray()) {
+                    Runtime.getRuntime().exec("adb shell input text " + digit);
+                    Thread.sleep(1000); // Chờ giữa các lần nhập
                 }
-            } catch (Exception e) {
-                System.out.println("Not found element. Continuing with the next steps.");
-            }
-            System.out.println("Continue...");
 
-            try {
-                // Popup force update is showing
-                MobileElement popupForceUpdate = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/imgforceUpdate")));
-                if (popupForceUpdate.isDisplayed()) {
-                    MobileElement clickClose = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/ivClose")));
-                    clickClose.click();
-                }
-            } catch (Exception e) {
-                System.out.println("Not found element. Continuing with the next steps.");
             }
-            System.out.println("Continue...");
+            catch (Exception e){
+                System.out.println("System error! Please try again");
+            }
 
-            try {
-                //Popup noti
-                MobileElement popupNoti = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath("//android.widget.TextView[@text=\"Cho phép Hi FPT gửi thông báo để bạn không bỏ lỡ các nhắc nhở quan trọng và thông tin hóa đơn\"]")));
-                if (popupNoti.isDisplayed()) {
-                    MobileElement clickYes = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath("//android.widget.TextView[@text=\"Bật thông báo\"]")));
-                    clickYes.click();
-                }
-            } catch (Exception e) {
-                System.out.println("Not found element. Continuing with the next steps.");
-            }
-            System.out.println("Continue...");
+//            try {
+//                // Popup force update is showing
+//                MobileElement popupForceUpdate = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/imgforceUpdate")));
+//                if (popupForceUpdate.isDisplayed()) {
+//                    MobileElement clickClose = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/ivClose")));
+//                    clickClose.click();
+//                }
+//            } catch (Exception e) {
+//                System.out.println("Not found element. Continuing with the next steps.");
+//            }
+//            System.out.println("Continue...");
+//
+//            try {
+//                //Popup noti
+//                MobileElement popupNoti = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath("//android.widget.TextView[@text=\"Cho phép Hi FPT gửi thông báo để bạn không bỏ lỡ các nhắc nhở quan trọng và thông tin hóa đơn\"]")));
+//                if (popupNoti.isDisplayed()) {
+//                    MobileElement clickYes = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath("//android.widget.TextView[@text=\"Bật thông báo\"]")));
+//                    clickYes.click();
+//                }
+//            } catch (Exception e) {
+//                System.out.println("Not found element. Continuing with the next steps.");
+//            }
+//            System.out.println("Continue...");
         } catch (Exception e) {
             System.err.println("Error!!!!" + e.getMessage());
             appiumDriver.quit();
         }
-        try {
-            // Đọc file Excel
-            String excelFilePath = "D:\\TestCaseForActiveAP.xlsx";
-            readTestDataFromExcel(excelFilePath, appiumDriver);
-            // Xuất report
-            String reportFilePath = "D:\\Test Report.xlsx";
-            Report.exportReport(excelFilePath, reportFilePath);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.err.println("System error. Please try again: " + e.getMessage());
-        }
+//        try {
+//            // Đọc file Excel
+//            String excelFilePath = "D:\\TestCaseForActiveAP.xlsx";
+//            readTestDataFromExcel(excelFilePath, appiumDriver);
+//            // Xuất report
+//            String reportFilePath = "D:\\Test Report.xlsx";
+//            Report.exportReport(excelFilePath, reportFilePath);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            System.err.println("System error. Please try again: " + e.getMessage());
+//        }
     }
 
     // Hàm đọc dữ liệu từ file Excel
