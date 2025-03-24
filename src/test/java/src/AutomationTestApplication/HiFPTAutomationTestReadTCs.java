@@ -25,22 +25,14 @@ public class HiFPTAutomationTestReadTCs {
         try {
             System.out.println("Start running Auto Test");
 
-            // Xử lý các bước kiểm thử cơ bản như đăng nhập
+            // Xử lý Đăng nhập luồng OTP / PIN
             try {
-                MobileElement loginScreen =
+                MobileElement loginScreenOTP =
                         (MobileElement) wait.until
                                 (ExpectedConditions.visibilityOfElementLocated
                                         (MobileBy.xpath("//android.widget.EditText")));
-                if (loginScreen.isDisplayed()) {
-                    loginScreen.sendKeys("0775892638");
-
-//                    MobileElement buttonContinue =
-//                            (MobileElement) wait.until
-//                                    (ExpectedConditions.visibilityOfElementLocated
-//                                            (MobileBy.xpath("//android.widget.Button")));
-//                    if (buttonContinue.isEnabled()) {
-//                        buttonContinue.click();
-//                    }
+                if (loginScreenOTP.isDisplayed()) {
+                    loginScreenOTP.sendKeys("0908418782");
                 }
             } catch (Exception e) {
                 System.out.println("System error! Please try again");
@@ -50,79 +42,67 @@ public class HiFPTAutomationTestReadTCs {
                 MobileElement inputPIN =
                         (MobileElement) wait.until
                                 (ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath
-                                        ("//android.widget.TextView[@text=\"Nhập mã PIN của bạn\"]")));
-                if (inputPIN.isDisplayed()) {
-                    MobileElement clickOutside =
-                            (MobileElement) wait.until
-                                    (ExpectedConditions.visibilityOfElementLocated
-                                            (MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout")));
-                    clickOutside.click();
+                                        ("//android.widget.TextView[@text=\"Nhập mã PIN\"]")));
+                    inputPIN.click();
                     // Input PIN
                     String otp = "123456";
                     for (char digit : otp.toCharArray()) {
                         Runtime.getRuntime().exec("adb shell input text " + digit);
                         Thread.sleep(1000); // Chờ giữa các lần nhập
                     }
-                }
             } catch (Exception e) {
                 System.out.println("System error! Please try again");
             }
 
-            try {
-                MobileElement inputOTP =
-                        (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated
-                                (MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout")));
-                inputOTP.click();
-                // Input PIN
-                String pin = "1309";
-                for (char digit : pin.toCharArray()) {
-                    Runtime.getRuntime().exec("adb shell input text " + digit);
-                    Thread.sleep(1000); // Chờ giữa các lần nhập
-                }
+//            try {
+//                // Chờ đến khi ô nhập OTP hiển thị
+//                MobileElement inputOTP =
+//                        (MobileElement) wait.until(
+//                        ExpectedConditions.elementToBeClickable(MobileBy.id("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout"))); // Thay thế bằng ID thực tế
+//
+//                inputOTP.click();
+//                Thread.sleep(1000); // Chờ 1 giây trước khi nhập PIN
+//
+//                if (inputOTP.isDisplayed()) {
+//                    // Nhập mã PIN trực tiếp
+//                    inputOTP.sendKeys("1309");
+//                }
+//            } catch (Exception e) {
+//                System.out.println("System error! Please try again. Error: " + e.getMessage());
+//            }
 
+            try {
+                MobileElement PopUpNoti =
+                        (MobileElement) wait.until
+                                (ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath
+                                        ("//android.widget.TextView[@text=\"Bật  thông  báo\"]")));
+                if (PopUpNoti.isDisplayed()){
+                    MobileElement clickNo =
+                            (MobileElement) wait.until
+                                    (ExpectedConditions.visibilityOfElementLocated
+                                            (MobileBy.xpath("//android.widget.TextView[@text=\"Để sau\"]")));
+                    clickNo.click();
+                }
             }
-            catch (Exception e){
+            catch ( Exception e){
                 System.out.println("System error! Please try again");
             }
-
-//            try {
-//                // Popup force update is showing
-//                MobileElement popupForceUpdate = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/imgforceUpdate")));
-//                if (popupForceUpdate.isDisplayed()) {
-//                    MobileElement clickClose = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id("com.rad.hifpt:id/ivClose")));
-//                    clickClose.click();
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Not found element. Continuing with the next steps.");
-//            }
-//            System.out.println("Continue...");
-//
-//            try {
-//                //Popup noti
-//                MobileElement popupNoti = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath("//android.widget.TextView[@text=\"Cho phép Hi FPT gửi thông báo để bạn không bỏ lỡ các nhắc nhở quan trọng và thông tin hóa đơn\"]")));
-//                if (popupNoti.isDisplayed()) {
-//                    MobileElement clickYes = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath("//android.widget.TextView[@text=\"Bật thông báo\"]")));
-//                    clickYes.click();
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Not found element. Continuing with the next steps.");
-//            }
-//            System.out.println("Continue...");
         } catch (Exception e) {
             System.err.println("Error!!!!" + e.getMessage());
             appiumDriver.quit();
         }
-//        try {
-//            // Đọc file Excel
-//            String excelFilePath = "D:\\TestCaseForActiveAP.xlsx";
-//            readTestDataFromExcel(excelFilePath, appiumDriver);
-//            // Xuất report
-//            String reportFilePath = "D:\\Test Report.xlsx";
-//            Report.exportReport(excelFilePath, reportFilePath);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//            System.err.println("System error. Please try again: " + e.getMessage());
-//        }
+
+        try {
+            // Đọc file Excel
+            String excelFilePath = "C:\\FPT\\Tele\\TestCaseForAppium.xlsx";
+            readTestDataFromExcel(excelFilePath, appiumDriver);
+            // Xuất report
+            String reportFilePath = "C:\\FPT\\Tele\\Test Report.xlsx";
+            Report.exportReport(excelFilePath, reportFilePath);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.err.println("System error. Please try again: " + e.getMessage());
+        }
     }
 
     // Hàm đọc dữ liệu từ file Excel
@@ -132,47 +112,44 @@ public class HiFPTAutomationTestReadTCs {
             Sheet sheet = workbook.getSheetAt(0); // Đọc sheet đầu tiên
 
             boolean allTestsPassed = true; // Biến kiểm tra xem tất cả các test case có thành công hay không
+            int totalCases = sheet.getLastRowNum(); // Số lượng test cases
 
-            // Duyệt qua từng dòng trong sheet
-            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            for (int i = 1; i <= totalCases; i++) {
                 Row row = sheet.getRow(i);
                 if (row == null) continue;
 
-                String testCaseName = row.getCell(0).getStringCellValue();
-                String action = row.getCell(1).getStringCellValue();
-                String ID = row.getCell(2).getStringCellValue();
-                String coordinates = row.getCell(3) != null ? row.getCell(3).getStringCellValue() : "";
-                String inputData = row.getCell(4) != null ? row.getCell(4).getStringCellValue() : "";
+                // Kiểm tra từng ô trước khi đọc giá trị để tránh NullPointerException
+                String testCaseName = (row.getCell(0) != null) ? row.getCell(0).getStringCellValue() : "N/A";
+                String action = (row.getCell(1) != null) ? row.getCell(1).getStringCellValue() : "N/A";
+                String ID = (row.getCell(2) != null) ? row.getCell(2).getStringCellValue() : "N/A";
+                String coordinates = (row.getCell(3) != null) ? row.getCell(3).getStringCellValue() : "";
+                String inputData = (row.getCell(4) != null) ? row.getCell(4).getStringCellValue() : "";
 
-                System.out.println("Executing: " + testCaseName);
+                System.out.println("Running case: " + testCaseName);
                 boolean result = performAction(appiumDriver, action, ID, inputData, coordinates);
 
-                // Kiểm tra nếu hành động thất bại thì đánh dấu allTestsPassed là false
                 if (!result) {
                     allTestsPassed = false;
                     System.out.println("Test case failed: " + testCaseName);
                 }
-            }
-
-            if (allTestsPassed) {
-                System.out.println("All test cases passed");
-            } else {
-                System.out.println("Some test cases failed");
+                if (i == totalCases) {
+                    if (allTestsPassed) {
+                        System.out.println("PASS - All test cases passed");
+                    } else {
+                        System.out.println("FAIL - Some test cases failed");
+                    }
+                }
+                // Thời gian chờ giữa các test case
+                Thread.sleep(1500);
             }
         } catch (IOException e) {
-            // Nếu có lỗi IO, dừng toàn bộ quá trình và thông báo lỗi
             System.err.println("Error reading Excel file: " + e.getMessage());
-            throw new RuntimeException("Failed to read test data from Excel.", e); // Ném ngoại lệ để dừng quá trình
+            throw new RuntimeException("Failed to read test data from Excel.", e);
         } catch (Exception e) {
-            // Bắt các ngoại lệ khác để xử lý trường hợp ngoài dự kiến
             System.err.println("An unexpected error occurred: " + e.getMessage());
-            throw new RuntimeException("An unexpected error occurred.", e); // Ném ngoại lệ
-        } finally {
-            // Đảm bảo driver được dừng
-            appiumDriver.quit();
+            throw new RuntimeException("An unexpected error occurred.", e);
         }
     }
-
 
     // Hàm thực hiện các bước kiểm thử
     public static boolean performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) {
