@@ -35,10 +35,10 @@ public class HiFPTAutomationTestReadTCs {
             handlePopUpNotification(wait);
 
             // Đọc file Excel & thực thi test cases
-            String excelFilePath = "C:\\FPT\\Tele\\TestCaseForAppium.xlsx";
+            String excelFilePath = "D:\\TestCaseForAppium.xlsx";//Remember to change
             readTestDataFromExcel(excelFilePath, appiumDriver, wait);
 
-            // Stay in app 30s before stop process
+            // Stay in app 10s before stop process
             Thread.sleep(10000);
 
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class HiFPTAutomationTestReadTCs {
     public static void handleLogin(WebDriverWait wait) {
         try {
             MobileElement loginScreenOTP = getElement(wait, "//android.widget.EditText");
-            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0908418782");
+            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0764543021");
             System.out.println("✅ Input phone number successfully");
 
             MobileElement PopupBlockSignUp = getElement(wait, "//android.widget.TextView[@text=\"Khóa đăng nhập\"]");
@@ -61,7 +61,7 @@ public class HiFPTAutomationTestReadTCs {
                 System.out.println("❌ Login unsuccessfully because system is showing error popup");
 
                 // Dừng chương trình ngay lập tức
-                System.exit(0);  // Thoát chương trình với mã lỗi 0
+                System.exit(1);  // Thoát chương trình với mã lỗi 1
                 return;
             }
 
@@ -75,8 +75,20 @@ public class HiFPTAutomationTestReadTCs {
                 }
                 System.out.println("✅ Input PIN successfully");
             }
-        } catch (Exception e) {
-            System.out.println("Login Error: " + e.getMessage());
+            MobileElement inputOTP = getElement(wait, "//android.widget.TextView[@text=\"Mã OTP vừa được gửi đến số điện thoại\"]");
+            if (inputOTP != null && inputOTP.isDisplayed()) {
+                inputOTP.click();
+                String OTP = "1309";
+                for (char digit : OTP.toCharArray()) {
+                    Runtime.getRuntime().exec("adb shell input text " + digit);
+                    Thread.sleep(1000);
+                }
+                System.out.println("✅ Input OTP successfully");
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -127,13 +139,13 @@ public class HiFPTAutomationTestReadTCs {
             System.out.println(allTestsPassed ? "✅ PASS - All test cases have been run" : "❌ FAIL - Some test cases failed");
 
             // Xuất báo cáo
-            String reportFilePath = "C:\\FPT\\Tele\\Test_Report.xlsx";
+            String reportFilePath = "D:\\Test_Report.xlsx"; //Remember to change
             Report.exportReport(excelFilePath, reportFilePath);
 
             // Stay in app 15s before stop process
             Thread.sleep(10000);
             // Dừng chương trình ngay sau khi chạy hết test cases
-            System.exit(0);
+            System.exit(1);
 
         } catch (IOException e) {
             System.err.println("Error reading Excel file: " + e.getMessage());
@@ -142,17 +154,23 @@ public class HiFPTAutomationTestReadTCs {
         }
     }
 
-    public static boolean performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) {
+    private static boolean performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) {
         WebDriverWait wait = new WebDriverWait(appiumDriver, 15);
-        if (ID == null || ID.trim().isEmpty()) {
-            System.out.println("⚠️ Skipping test case due to missing ID.");
-            return true;  // Trả về true để không làm thất bại toàn bộ quá trình
-        }
+//        if (ID == null || ID.trim().isEmpty()) {
+//            System.out.println("Continue process");
+//            return false;  // Trả về true để không làm thất bại toàn bộ quá trình
+//        }
 
         Map<String, Consumer<String>> actions = new HashMap<>();
         actions.put("click", id -> clickElement(wait, id));
         actions.put("value", id -> inputText(wait, id, inputData));
-        actions.put("tap", coordinate -> tapCoordinates(appiumDriver, coordinates));
+        actions.put("tap", id -> {
+            if (coordinates != null && !coordinates.isEmpty()) {
+                tapCoordinates(appiumDriver, coordinates);
+            } else {
+                System.out.println("⚠️ Skipping tap, no coordinates provided.");
+            }
+        });
 
         Consumer<String> actionMethod = actions.get(action.toLowerCase());
         if (actionMethod != null) {
@@ -182,7 +200,7 @@ public class HiFPTAutomationTestReadTCs {
         if (parts.length == 2) {
             int x = Integer.parseInt(parts[0].trim());
             int y = Integer.parseInt(parts[1].trim());
-            new TouchAction<>(appiumDriver).tap(PointOption.point(x, y)).perform();
+            new TouchAction<>(appiumDriver).tap(PointOption.point(x,y)).perform();
         }
     }
 
