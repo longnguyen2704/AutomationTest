@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="Commit">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/Report.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +108,7 @@
     <configuration name="HiFPTAutomationTestReadTCs" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="src.AutomationTestApplication.HiFPTAutomationTestReadTCs" />
       <module name="Appium_Mobile" />
+      <option name="VM_PARAMETERS" value="--enable-native-access=ALL-UNNAMED " />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="src.AutomationTestApplication.*" />

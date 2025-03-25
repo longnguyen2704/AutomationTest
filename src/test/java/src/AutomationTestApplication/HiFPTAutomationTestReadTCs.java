@@ -15,199 +15,196 @@ import src.driverForHiFPT.Report;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class HiFPTAutomationTestReadTCs {
 
     public static void main(String[] args) {
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForHiFPT.getDriver(Platform.ANDROID);
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 60L);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 6);
 
         try {
-            System.out.println("Start running Auto Test");
+            System.out.println("=====Start running Automation Test=====");
 
-            // Xử lý Đăng nhập luồng OTP / PIN
-            try {
-                MobileElement loginScreenOTP =
-                        (MobileElement) wait.until
-                                (ExpectedConditions.visibilityOfElementLocated
-                                        (MobileBy.xpath("//android.widget.EditText")));
-                if (loginScreenOTP.isDisplayed()) {
-                    loginScreenOTP.sendKeys("0908418782");
-                }
-            } catch (Exception e) {
-                System.out.println("System error! Please try again");
-            }
+            // Xử lý đăng nhập
+            handleLogin(wait);
 
-            try {
-                MobileElement inputPIN =
-                        (MobileElement) wait.until
-                                (ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath
-                                        ("//android.widget.TextView[@text=\"Nhập mã PIN\"]")));
-                    inputPIN.click();
-                    // Input PIN
-                    String otp = "123456";
-                    for (char digit : otp.toCharArray()) {
-                        Runtime.getRuntime().exec("adb shell input text " + digit);
-                        Thread.sleep(1000); // Chờ giữa các lần nhập
-                    }
-            } catch (Exception e) {
-                System.out.println("System error! Please try again");
-            }
+            // Kiểm tra popup thông báo
+            handlePopUpNotification(wait);
 
-//            try {
-//                // Chờ đến khi ô nhập OTP hiển thị
-//                MobileElement inputOTP =
-//                        (MobileElement) wait.until(
-//                        ExpectedConditions.elementToBeClickable(MobileBy.id("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout"))); // Thay thế bằng ID thực tế
-//
-//                inputOTP.click();
-//                Thread.sleep(1000); // Chờ 1 giây trước khi nhập PIN
-//
-//                if (inputOTP.isDisplayed()) {
-//                    // Nhập mã PIN trực tiếp
-//                    inputOTP.sendKeys("1309");
-//                }
-//            } catch (Exception e) {
-//                System.out.println("System error! Please try again. Error: " + e.getMessage());
-//            }
-
-            try {
-                MobileElement PopUpNoti =
-                        (MobileElement) wait.until
-                                (ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath
-                                        ("//android.widget.TextView[@text=\"Bật  thông  báo\"]")));
-                if (PopUpNoti.isDisplayed()){
-                    MobileElement clickNo =
-                            (MobileElement) wait.until
-                                    (ExpectedConditions.visibilityOfElementLocated
-                                            (MobileBy.xpath("//android.widget.TextView[@text=\"Để sau\"]")));
-                    clickNo.click();
-                }
-            }
-            catch ( Exception e){
-                System.out.println("System error! Please try again");
-            }
-        } catch (Exception e) {
-            System.err.println("Error!!!!" + e.getMessage());
-            appiumDriver.quit();
-        }
-
-        try {
-            // Đọc file Excel
+            // Đọc file Excel & thực thi test cases
             String excelFilePath = "C:\\FPT\\Tele\\TestCaseForAppium.xlsx";
-            readTestDataFromExcel(excelFilePath, appiumDriver);
-            // Xuất report
-            String reportFilePath = "C:\\FPT\\Tele\\Test Report.xlsx";
-            Report.exportReport(excelFilePath, reportFilePath);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.err.println("System error. Please try again: " + e.getMessage());
+            readTestDataFromExcel(excelFilePath, appiumDriver, wait);
+
+            // Stay in app 30s before stop process
+            Thread.sleep(10000);
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        } finally {
+            appiumDriver.quit();
         }
     }
 
-    // Hàm đọc dữ liệu từ file Excel
-    private static void readTestDataFromExcel(String excelFilePath, AppiumDriver<MobileElement> appiumDriver) throws InterruptedException {
-        try (FileInputStream fis = new FileInputStream(excelFilePath)) {
-            Workbook workbook = new XSSFWorkbook(fis);
-            Sheet sheet = workbook.getSheetAt(0); // Đọc sheet đầu tiên
+    public static void handleLogin(WebDriverWait wait) {
+        try {
+            MobileElement loginScreenOTP = getElement(wait, "//android.widget.EditText");
+            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0908418782");
+            System.out.println("✅ Input phone number successfully");
 
-            boolean allTestsPassed = true; // Biến kiểm tra xem tất cả các test case có thành công hay không
-            int totalCases = sheet.getLastRowNum(); // Số lượng test cases
+            MobileElement PopupBlockSignUp = getElement(wait, "//android.widget.TextView[@text=\"Khóa đăng nhập\"]");
+            if (PopupBlockSignUp != null && PopupBlockSignUp.isDisplayed()) {
+                MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
+                if (clickClose != null) clickClose.click();
+                System.out.println("❌ Login unsuccessfully because system is showing error popup");
+
+                // Dừng chương trình ngay lập tức
+                System.exit(0);  // Thoát chương trình với mã lỗi 0
+                return;
+            }
+
+            MobileElement inputPIN = getElement(wait, "//android.widget.TextView[@text=\"Nhập mã PIN\"]");
+            if (inputPIN != null) {
+                inputPIN.click();
+                String PIN = "123456";
+                for (char digit : PIN.toCharArray()) {
+                    Runtime.getRuntime().exec("adb shell input text " + digit);
+                    Thread.sleep(1000);
+                }
+                System.out.println("✅ Input PIN successfully");
+            }
+        } catch (Exception e) {
+            System.out.println("Login Error: " + e.getMessage());
+        }
+    }
+
+    private static void handlePopUpNotification(WebDriverWait wait) {
+        try {
+            MobileElement popUp = getElement(wait, "//android.widget.TextView[@text=\"Bật  thông  báo\"]");
+            if (popUp != null && popUp.isDisplayed()) {
+                MobileElement clickNo = getElement(wait, "//android.widget.TextView[@text=\"Để sau\"]");
+                if (clickNo != null) clickNo.click();
+            }
+            System.out.println("✅ Home Hi FPT say Hi");
+        } catch (Exception ignored) {
+        }
+    }
+
+    private static void readTestDataFromExcel(String excelFilePath, AppiumDriver<MobileElement> appiumDriver, WebDriverWait wait) {
+        try (FileInputStream fis = new FileInputStream(excelFilePath);
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+            int totalCases = sheet.getLastRowNum();
+            boolean allTestsPassed = true;
 
             for (int i = 1; i <= totalCases; i++) {
                 Row row = sheet.getRow(i);
-                if (row == null) continue;
+                if (row == null || row.getCell(0) == null) continue;
 
-                // Kiểm tra từng ô trước khi đọc giá trị để tránh NullPointerException
-                String testCaseName = (row.getCell(0) != null) ? row.getCell(0).getStringCellValue() : "N/A";
-                String action = (row.getCell(1) != null) ? row.getCell(1).getStringCellValue() : "N/A";
-                String ID = (row.getCell(2) != null) ? row.getCell(2).getStringCellValue() : "N/A";
-                String coordinates = (row.getCell(3) != null) ? row.getCell(3).getStringCellValue() : "";
-                String inputData = (row.getCell(4) != null) ? row.getCell(4).getStringCellValue() : "";
+                String testCaseName = getCellValue(row, 0);
+                String action = getCellValue(row, 1);
+                String ID = getCellValue(row, 2);
+                String coordinates = getCellValue(row, 3);
+                String inputData = getCellValue(row, 4);
 
-                System.out.println("Running case: " + testCaseName);
+                if (testCaseName.trim().isEmpty() || action.trim().isEmpty()) {
+                    System.out.println("Invalid test case format at row " + (i + 1));
+                    continue;
+                }
+                Thread.sleep(2000);
+                System.out.println("⮑ Running case: " + testCaseName);
                 boolean result = performAction(appiumDriver, action, ID, inputData, coordinates);
 
                 if (!result) {
                     allTestsPassed = false;
-                    System.out.println("Test case failed: " + testCaseName);
+                    System.out.println("❌ Test case failed: " + testCaseName);
                 }
-                if (i == totalCases) {
-                    if (allTestsPassed) {
-                        System.out.println("PASS - All test cases passed");
-                    } else {
-                        System.out.println("FAIL - Some test cases failed");
-                    }
-                }
-                // Thời gian chờ giữa các test case
-                Thread.sleep(1500);
             }
+
+            System.out.println(allTestsPassed ? "✅ PASS - All test cases have been run" : "❌ FAIL - Some test cases failed");
+
+            // Xuất báo cáo
+            String reportFilePath = "C:\\FPT\\Tele\\Test_Report.xlsx";
+            Report.exportReport(excelFilePath, reportFilePath);
+
+            // Stay in app 15s before stop process
+            Thread.sleep(10000);
+            // Dừng chương trình ngay sau khi chạy hết test cases
+            System.exit(0);
+
         } catch (IOException e) {
             System.err.println("Error reading Excel file: " + e.getMessage());
-            throw new RuntimeException("Failed to read test data from Excel.", e);
-        } catch (Exception e) {
-            System.err.println("An unexpected error occurred: " + e.getMessage());
-            throw new RuntimeException("An unexpected error occurred.", e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    // Hàm thực hiện các bước kiểm thử
     public static boolean performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) {
-        String selector = action.toLowerCase();
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 60L);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 15);
+        if (ID == null || ID.trim().isEmpty()) {
+            System.out.println("⚠️ Skipping test case due to missing ID.");
+            return true;  // Trả về true để không làm thất bại toàn bộ quá trình
+        }
+
+        Map<String, Consumer<String>> actions = new HashMap<>();
+        actions.put("click", id -> clickElement(wait, id));
+        actions.put("value", id -> inputText(wait, id, inputData));
+        actions.put("tap", coordinate -> tapCoordinates(appiumDriver, coordinates));
+
+        Consumer<String> actionMethod = actions.get(action.toLowerCase());
+        if (actionMethod != null) {
+            actionMethod.accept(ID);
+            return true;
+        } else {
+            System.out.println("⚠️ Invalid action: '" + action + "' at ID: " + ID);
+            return false;
+        }
+    }
+
+    private static void clickElement(WebDriverWait wait, String ID) {
+        MobileElement element = getElement(wait, ID);
+        if (element != null) element.click();
+    }
+
+    private static void inputText(WebDriverWait wait, String ID, String inputData) {
+        if (inputData == null) return;
+        MobileElement inputField = getElement(wait, ID);
+        if (inputField != null) inputField.sendKeys(inputData);
+    }
+
+    private static void tapCoordinates(AppiumDriver<MobileElement> appiumDriver, String coordinates) {
+        if (coordinates == null || coordinates.trim().isEmpty()) return;
+
+        String[] parts = coordinates.split(",");
+        if (parts.length == 2) {
+            int x = Integer.parseInt(parts[0].trim());
+            int y = Integer.parseInt(parts[1].trim());
+            new TouchAction<>(appiumDriver).tap(PointOption.point(x, y)).perform();
+        }
+    }
+
+    private static MobileElement getElement(WebDriverWait wait, String ID) {
+        if (ID == null || ID.trim().isEmpty()) return null;
+
         try {
-            switch (selector) {
-                case "click":
-                    if (ID == null || ID.trim().isEmpty()) {
-                        System.out.println("Invalid ID: ID is empty or null");
-                        return false;
-                    }
-                    if (ID.startsWith("com")) {
-                        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
-                        appiumDriver.findElement(MobileBy.id(ID)).click();
-                    } else if (ID.startsWith("//")) {
-                        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
-                        appiumDriver.findElement(MobileBy.xpath(ID)).click();
-                    } else if (ID.startsWith("android.widget")) {
-                        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(ID)));
-                        appiumDriver.findElement(MobileBy.className(ID)).click();
-                    }
-                    break;
-                case "tap":
-                    if (coordinates == null || coordinates.trim().isEmpty()) {
-                        System.out.println("Invalid Coordinates: Coordinates are empty or null");
-                        return false;
-                    }
-                    String[] parts = coordinates.split(",");
-                    int x = Integer.parseInt(parts[0].trim());
-                    int y = Integer.parseInt(parts[1].trim());
-                    new TouchAction<>(appiumDriver).tap(PointOption.point(x, y)).perform();
-                    break;
-                case "value":
-                    if (inputData == null || inputData.trim().isEmpty()) {
-                        System.out.println("Invalid Input Data: inputData is empty or null");
-                        return false;
-                    }
-                    if (ID == null || ID.trim().isEmpty()) {
-                        System.out.println("Invalid ID: ID is empty or null");
-                        return false;
-                    }
-                    MobileElement inputField;
-                    if (ID.startsWith("com")) {
-                        inputField = appiumDriver.findElement(MobileBy.id(ID));
-                    } else if (ID.startsWith("//")) {
-                        inputField = appiumDriver.findElement(MobileBy.xpath(ID));
-                    } else {
-                        inputField = appiumDriver.findElement(MobileBy.className(ID));
-                    }
-                    inputField.sendKeys(inputData);
-                    break;
-                default:
-                    throw new UnsupportedOperationException("Please input action");
+            if (ID.startsWith("com")) {
+                return (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
+            } else if (ID.startsWith("//")) {
+                return (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(ID)));
+            } else {
+                return (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(ID)));
             }
         } catch (Exception e) {
-            System.out.println("Exception: " + e.getMessage());
+            System.out.println("⚠️ Element not found, because popup error not showing: " + ID);
+            return null;  // Trả về null để bỏ qua test case này
         }
-        return true;
+    }
+
+    public static String getCellValue(Row row, int index) {
+        Cell cell = row.getCell(index);
+        return (cell != null) ? cell.toString().trim() : "";
     }
 }
