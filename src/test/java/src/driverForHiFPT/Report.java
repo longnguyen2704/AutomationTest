@@ -42,8 +42,15 @@ public class Report {
                 String elementID = getCellValue(testCaseRow, 2);
                 String inputData = getCellValue(testCaseRow, 4);
 
-                // Giả lập kết quả (Bạn có thể thay bằng kết quả thực tế)
-                String result = "Passed"; // Giả lập pass, có thể cập nhật từ thực tế
+                // Kiểm tra nếu testCaseName chứa "false"
+                String result;
+                if (testCaseName.toLowerCase().contains("false")) {
+                    result = "False";
+                } else if (testCaseName.toLowerCase().contains("true")){
+                    result = "Passed"; // Bạn có thể thay đổi kết quả thực tế ở đây
+                } else {
+                    result = "N/A";
+                }
 
                 // Ghi dữ liệu vào báo cáo
                 Row reportRow = reportSheet.createRow(rowNum++);

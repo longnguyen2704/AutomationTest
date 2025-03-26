@@ -48,10 +48,10 @@ public class HiFPTAutomationTestReadTCs {
         }
     }
 
-    public static void handleLogin(WebDriverWait wait) {
+    private static void handleLogin(WebDriverWait wait) {
         try {
             MobileElement loginScreenOTP = getElement(wait, "//android.widget.EditText");
-            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0764543021");
+            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0909725106");
             System.out.println("✅ Input phone number successfully");
 
             MobileElement PopupBlockSignUp = getElement(wait, "//android.widget.TextView[@text=\"Khóa đăng nhập\"]");
@@ -99,9 +99,10 @@ public class HiFPTAutomationTestReadTCs {
                 MobileElement clickNo = getElement(wait, "//android.widget.TextView[@text=\"Để sau\"]");
                 if (clickNo != null) clickNo.click();
             }
-            System.out.println("✅ Home Hi FPT say Hi");
+            System.out.println("✅ Not allow notification success");
         } catch (Exception ignored) {
         }
+        System.out.println("✅ Welcome to Hi FPT!!!");
     }
 
     private static void readTestDataFromExcel(String excelFilePath, AppiumDriver<MobileElement> appiumDriver, WebDriverWait wait) {
@@ -129,6 +130,23 @@ public class HiFPTAutomationTestReadTCs {
                 Thread.sleep(2000);
                 System.out.println("⮑ Running case: " + testCaseName);
                 boolean result = performAction(appiumDriver, action, ID, inputData, coordinates);
+
+                try {
+                    MobileElement popUpNotHaveInfoModem = getElement(wait, "//android.widget.TextView[@text=\"Mất kết nối với Modem\"]");
+                    if (popUpNotHaveInfoModem != null && popUpNotHaveInfoModem.isDisplayed()) {
+                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
+                        if (clickClose != null) clickClose.click();
+                    }
+                    System.out.println("⚠️ Vui lòng đổi sang Hợp đồng khác vì Hợp đồng này không có thông tin Modem");
+
+                    // Stay in app 15s before stop process
+                    Thread.sleep(10000);
+
+                    // Dừng chương trình ngay sau khi chạy hết test cases
+                    System.exit(1);
+
+                } catch (Exception ignored) {
+                }
 
                 if (!result) {
                     allTestsPassed = false;
@@ -216,7 +234,7 @@ public class HiFPTAutomationTestReadTCs {
                 return (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(ID)));
             }
         } catch (Exception e) {
-            System.out.println("⚠️ Element not found, because popup error not showing: " + ID);
+            System.out.println("⚠️ Element not found, because not showing: " + ID);
             return null;  // Trả về null để bỏ qua test case này
         }
     }
