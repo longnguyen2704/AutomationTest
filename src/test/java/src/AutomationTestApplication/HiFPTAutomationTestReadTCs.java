@@ -16,7 +16,9 @@ import src.driverForHiFPT.Report;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class HiFPTAutomationTestReadTCs {
@@ -51,7 +53,7 @@ public class HiFPTAutomationTestReadTCs {
     private static void handleLogin(WebDriverWait wait) {
         try {
             MobileElement loginScreenOTP = getElement(wait, "//android.widget.EditText");
-            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0909725106");
+            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0867634110");
             System.out.println("✅ Input phone number successfully");
 
             MobileElement PopupBlockSignUp = getElement(wait, "//android.widget.TextView[@text=\"Khóa đăng nhập\"]");
@@ -102,6 +104,17 @@ public class HiFPTAutomationTestReadTCs {
             System.out.println("✅ Not allow notification success");
         } catch (Exception ignored) {
         }
+        try {
+            MobileElement bottomSheet =
+                    getElement(wait, "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[1]");
+            if (bottomSheet != null && bottomSheet.isDisplayed()){
+                MobileElement tabOutSide =
+                        getElement(wait, "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[2]");
+                if (tabOutSide != null) tabOutSide.click();
+            }
+            System.out.println("✅ Close bottom sheet");
+        } catch (Exception ignored){
+        }
         System.out.println("✅ Welcome to Hi FPT!!!");
     }
 
@@ -112,6 +125,7 @@ public class HiFPTAutomationTestReadTCs {
             Sheet sheet = workbook.getSheetAt(0);
             int totalCases = sheet.getLastRowNum();
             boolean allTestsPassed = true;
+            boolean isModemError = false;
 
             for (int i = 1; i <= totalCases; i++) {
                 Row row = sheet.getRow(i);
@@ -128,24 +142,41 @@ public class HiFPTAutomationTestReadTCs {
                     continue;
                 }
                 Thread.sleep(2000);
+
                 System.out.println("⮑ Running case: " + testCaseName);
                 boolean result = performAction(appiumDriver, action, ID, inputData, coordinates);
-
-                try {
+                // Kiểm tra lỗi chỉ một lần
+                if (!isModemError) {
                     MobileElement popUpNotHaveInfoModem = getElement(wait, "//android.widget.TextView[@text=\"Mất kết nối với Modem\"]");
                     if (popUpNotHaveInfoModem != null && popUpNotHaveInfoModem.isDisplayed()) {
                         MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
                         if (clickClose != null) clickClose.click();
+                        System.out.println("⚠️ Vui lòng đổi sang Hợp đồng khác vì Hợp đồng này không có thông tin Modem");
+                        // Stay in app 10s before stop process
+                        Thread.sleep(6000);
+                        isModemError = true; // Đánh dấu đã xử lý lỗi
+                        System.exit(1);
                     }
-                    System.out.println("⚠️ Vui lòng đổi sang Hợp đồng khác vì Hợp đồng này không có thông tin Modem");
-
-                    // Stay in app 15s before stop process
-                    Thread.sleep(10000);
-
-                    // Dừng chương trình ngay sau khi chạy hết test cases
-                    System.exit(1);
-
-                } catch (Exception ignored) {
+                    MobileElement popupSystemError = getElement(wait, "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
+                    if (popupSystemError != null && popupSystemError.isDisplayed()){
+                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
+                        if (clickClose != null) clickClose.click();
+                        System.out.println("Chưa hiển thị được thông tin");
+                        // Stay in app 10s before stop process
+                        Thread.sleep(6000);
+                        isModemError = true; // Đánh dấu đã xử lý lỗi
+                        System.exit(1);
+                    }
+                    MobileElement popupNotHaveInfoModem = getElement(wait, "//android.widget.TextView[@text=\"Chưa có thông tin\"]");
+                    if (popupNotHaveInfoModem != null && popupNotHaveInfoModem.isDisplayed()){
+                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
+                        if (clickClose != null) clickClose.click();
+                        System.out.println("Chưa có thông tin Modem");
+                        // Stay in app 10s before stop process
+                        Thread.sleep(6000);
+                        isModemError = true; // Đánh dấu đã xử lý lỗi
+                        System.exit(1);
+                    }
                 }
 
                 if (!result) {
@@ -153,6 +184,7 @@ public class HiFPTAutomationTestReadTCs {
                     System.out.println("❌ Test case failed: " + testCaseName);
                 }
             }
+
 
             System.out.println(allTestsPassed ? "✅ PASS - All test cases have been run" : "❌ FAIL - Some test cases failed");
 
@@ -174,10 +206,6 @@ public class HiFPTAutomationTestReadTCs {
 
     private static boolean performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) {
         WebDriverWait wait = new WebDriverWait(appiumDriver, 15);
-//        if (ID == null || ID.trim().isEmpty()) {
-//            System.out.println("Continue process");
-//            return false;  // Trả về true để không làm thất bại toàn bộ quá trình
-//        }
 
         Map<String, Consumer<String>> actions = new HashMap<>();
         actions.put("click", id -> clickElement(wait, id));
@@ -218,13 +246,14 @@ public class HiFPTAutomationTestReadTCs {
         if (parts.length == 2) {
             int x = Integer.parseInt(parts[0].trim());
             int y = Integer.parseInt(parts[1].trim());
-            new TouchAction<>(appiumDriver).tap(PointOption.point(x,y)).perform();
+            new TouchAction<>(appiumDriver).tap(PointOption.point(x, y)).perform();
         }
     }
 
+    private static final Set<String> failedElements = new HashSet<>(); // Lưu ID đã lỗi
+
     private static MobileElement getElement(WebDriverWait wait, String ID) {
         if (ID == null || ID.trim().isEmpty()) return null;
-
         try {
             if (ID.startsWith("com")) {
                 return (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(ID)));
@@ -234,7 +263,11 @@ public class HiFPTAutomationTestReadTCs {
                 return (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(ID)));
             }
         } catch (Exception e) {
-            System.out.println("⚠️ Element not found, because not showing: " + ID);
+            // Nếu ID chưa từng báo lỗi, in ra thông báo
+            if (!failedElements.contains(ID)) {
+                System.out.println("⚠️ Element not found, because not showing: " + ID);
+                failedElements.add(ID); // Đánh dấu ID này đã bị lỗi
+            }
             return null;  // Trả về null để bỏ qua test case này
         }
     }
