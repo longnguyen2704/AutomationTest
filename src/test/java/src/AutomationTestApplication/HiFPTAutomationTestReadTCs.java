@@ -48,9 +48,6 @@ public class HiFPTAutomationTestReadTCs {
             // Kiểm tra popup thông báo
             handlePopUpNotification(wait);
 
-            // Kiểm tra toast
-            handleToast(wait);
-
             // Đọc file Excel & thực thi test cases
             String excelFilePath = "D:\\TestCaseForAppium.xlsx";//Remember to change
             readTestDataFromExcel(excelFilePath, appiumDriver, wait);
