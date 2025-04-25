@@ -5,14 +5,18 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import src.driverForHiFPT.DriverFactoryForHiFPT;
 import src.driverForHiFPT.Platform;
 import src.driverForHiFPT.Report;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,7 +29,15 @@ public class HiFPTAutomationTestReadTCs {
 
     public static void main(String[] args) {
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForHiFPT.getDriver(Platform.ANDROID);
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 6);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 5);
+
+        // Đăng ký Shutdown Hook
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            takeFinalScreenshot(appiumDriver, "D:\\final_screenshot.png");
+            if (appiumDriver != null) {
+                System.exit(1);
+            }
+        }));
 
         try {
             System.out.println("=====Start running Automation Test=====");
@@ -36,12 +48,15 @@ public class HiFPTAutomationTestReadTCs {
             // Kiểm tra popup thông báo
             handlePopUpNotification(wait);
 
+            // Kiểm tra toast
+            handleToast(wait);
+
             // Đọc file Excel & thực thi test cases
             String excelFilePath = "D:\\TestCaseForAppium.xlsx";//Remember to change
             readTestDataFromExcel(excelFilePath, appiumDriver, wait);
 
             // Stay in app 10s before stop process
-            Thread.sleep(10000);
+            Thread.sleep(6000);
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -65,6 +80,11 @@ public class HiFPTAutomationTestReadTCs {
                 // Dừng chương trình ngay lập tức
                 System.exit(1);  // Thoát chương trình với mã lỗi 1
                 return;
+            }
+
+            MobileElement ShowKeyBoard = getElement(wait, "android.view.View");
+            if (ShowKeyBoard != null && !ShowKeyBoard.isDisplayed()){
+                ShowKeyBoard.click();
             }
 
             MobileElement inputPIN = getElement(wait, "//android.widget.TextView[@text=\"Nhập mã PIN\"]");
@@ -141,10 +161,12 @@ public class HiFPTAutomationTestReadTCs {
                     System.out.println("Invalid test case format at row " + (i + 1));
                     continue;
                 }
-                Thread.sleep(2000);
+                Thread.sleep(1500);
 
                 System.out.println("⮑ Running case: " + testCaseName);
-                boolean result = performAction(appiumDriver, action, ID, inputData, coordinates);
+
+                boolean resultOfTest = performAction(appiumDriver, action, ID, inputData, coordinates);
+
                 // Kiểm tra lỗi chỉ một lần
                 if (!isModemError) {
                     MobileElement popUpNotHaveInfoModem = getElement(wait, "//android.widget.TextView[@text=\"Mất kết nối với Modem\"]");
@@ -178,14 +200,13 @@ public class HiFPTAutomationTestReadTCs {
                         System.exit(1);
                     }
                 }
-
-                if (!result) {
+                // Ghi nhận kết quả
+                if (resultOfTest) {
+                } else {
                     allTestsPassed = false;
                     System.out.println("❌ Test case failed: " + testCaseName);
                 }
             }
-
-
             System.out.println(allTestsPassed ? "✅ PASS - All test cases have been run" : "❌ FAIL - Some test cases failed");
 
             // Xuất báo cáo
@@ -193,7 +214,7 @@ public class HiFPTAutomationTestReadTCs {
             Report.exportReport(excelFilePath, reportFilePath);
 
             // Stay in app 15s before stop process
-            Thread.sleep(10000);
+            Thread.sleep(6000);
             // Dừng chương trình ngay sau khi chạy hết test cases
             System.exit(1);
 
@@ -205,7 +226,7 @@ public class HiFPTAutomationTestReadTCs {
     }
 
     private static boolean performAction(AppiumDriver<MobileElement> appiumDriver, String action, String ID, String inputData, String coordinates) {
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 15);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 5);
 
         Map<String, Consumer<String>> actions = new HashMap<>();
         actions.put("click", id -> clickElement(wait, id));
@@ -275,5 +296,16 @@ public class HiFPTAutomationTestReadTCs {
     public static String getCellValue(Row row, int index) {
         Cell cell = row.getCell(index);
         return (cell != null) ? cell.toString().trim() : "";
+    }
+
+    private static void takeFinalScreenshot(AppiumDriver<MobileElement> driver, String filePath) {
+        try {
+            File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            File targetFile = new File(filePath);
+            FileUtils.copyFile(srcFile, targetFile);
+            System.out.println("📸 Screenshot saved to: " + filePath);
+        } catch (IOException e) {
+            System.err.println("❌ Failed to take screenshot: " + e.getMessage());
+        }
     }
 }

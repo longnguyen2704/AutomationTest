@@ -43,13 +43,11 @@ public class Report {
                 String inputData = getCellValue(testCaseRow, 4);
 
                 // Kiểm tra nếu testCaseName chứa "false"
-                String result;
+                String result = null;
                 if (testCaseName.toLowerCase().contains("false")) {
                     result = "False";
                 } else if (testCaseName.toLowerCase().contains("true")){
                     result = "Passed"; // Bạn có thể thay đổi kết quả thực tế ở đây
-                } else {
-                    result = "N/A";
                 }
 
                 // Ghi dữ liệu vào báo cáo
