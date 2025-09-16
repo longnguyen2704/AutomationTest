@@ -5,54 +5,52 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import src.Handle.HandleLogin;
+import src.Handle.HandlePopupNotification;
+import src.Handle.SwipeUpAndDown;
 import src.driverForHiFPT.DriverFactoryForHiFPT;
 import src.driverForHiFPT.Platform;
-import src.driverForHiFPT.Report;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.InputStream;
+import java.util.List;
+
 public class HiFPTAutomationTestReadTCs {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MalformedURLException {
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForHiFPT.getDriver(Platform.ANDROID);
         WebDriverWait wait = new WebDriverWait(appiumDriver, 5);
-
-        // Đăng ký Shutdown Hook
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            takeFinalScreenshot(appiumDriver, "D:\\final_screenshot.png");
-            if (appiumDriver != null) {
-                System.exit(1);
-            }
-        }));
 
         try {
             System.out.println("=====Start running Automation Test=====");
 
             // Xử lý đăng nhập
-            handleLogin(wait);
+            HandleLogin.LoginScreen(wait);
 
             // Kiểm tra popup thông báo
-            handlePopUpNotification(wait);
+            HandlePopupNotification.handlePopUpNotification(wait);
+
+            // Handle swipe up and down
+            SwipeUpAndDown.scrollUp(appiumDriver);
+//            SwipeUpAndDown.scrollDown(appiumDriver);
 
             // Đọc file Excel & thực thi test cases
-            String excelFilePath = "D:\\TestCaseForAppium.xlsx";//Remember to change
-            readTestDataFromExcel(excelFilePath, appiumDriver, wait);
+            String fileYAML = "/baymax/test.yaml"; //Remember to change
+            readTestDataFromYaml(fileYAML, appiumDriver, wait);
 
-            // Stay in app 10s before stop process
+            // Stay in app 6s before stop process
             Thread.sleep(6000);
 
         } catch (Exception e) {
@@ -62,163 +60,77 @@ public class HiFPTAutomationTestReadTCs {
         }
     }
 
-    private static void handleLogin(WebDriverWait wait) {
-        try {
-            MobileElement loginScreenOTP = getElement(wait, "//android.widget.EditText");
-            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0867634110");
-            System.out.println("✅ Input phone number successfully");
+    private static void readTestDataFromYaml(String yamlFilePath, AppiumDriver<MobileElement> appiumDriver, WebDriverWait wait) {
+        boolean allTestsPassed = true;
+        boolean isModemError = false;
 
-            MobileElement PopupBlockSignUp = getElement(wait, "//android.widget.TextView[@text=\"Khóa đăng nhập\"]");
-            if (PopupBlockSignUp != null && PopupBlockSignUp.isDisplayed()) {
-                MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
-                if (clickClose != null) clickClose.click();
-                System.out.println("❌ Login unsuccessfully because system is showing error popup");
+        try (InputStream inputStream = new FileInputStream(yamlFilePath)) {
+            Yaml yaml = new Yaml();
+            Map<String, Object> data = yaml.load(inputStream);
 
-                // Dừng chương trình ngay lập tức
-                System.exit(1);  // Thoát chương trình với mã lỗi 1
-                return;
-            }
+            List<Map<String, Object>> testCases = (List<Map<String, Object>>) data.get("testcases");
 
-            MobileElement ShowKeyBoard = getElement(wait, "android.view.View");
-            if (ShowKeyBoard != null && !ShowKeyBoard.isDisplayed()){
-                ShowKeyBoard.click();
-            }
-
-            MobileElement inputPIN = getElement(wait, "//android.widget.TextView[@text=\"Nhập mã PIN\"]");
-            if (inputPIN != null) {
-                inputPIN.click();
-                String PIN = "123456";
-                for (char digit : PIN.toCharArray()) {
-                    Runtime.getRuntime().exec("adb shell input text " + digit);
-                    Thread.sleep(1000);
-                }
-                System.out.println("✅ Input PIN successfully");
-            }
-            MobileElement inputOTP = getElement(wait, "//android.widget.TextView[@text=\"Mã OTP vừa được gửi đến số điện thoại\"]");
-            if (inputOTP != null && inputOTP.isDisplayed()) {
-                inputOTP.click();
-                String OTP = "1309";
-                for (char digit : OTP.toCharArray()) {
-                    Runtime.getRuntime().exec("adb shell input text " + digit);
-                    Thread.sleep(1000);
-                }
-                System.out.println("✅ Input OTP successfully");
-            }
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        } catch (InterruptedException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    private static void handlePopUpNotification(WebDriverWait wait) {
-        try {
-            MobileElement popUp = getElement(wait, "//android.widget.TextView[@text=\"Bật  thông  báo\"]");
-            if (popUp != null && popUp.isDisplayed()) {
-                MobileElement clickNo = getElement(wait, "//android.widget.TextView[@text=\"Để sau\"]");
-                if (clickNo != null) clickNo.click();
-            }
-            System.out.println("✅ Not allow notification success");
-        } catch (Exception ignored) {
-        }
-        try {
-            MobileElement bottomSheet =
-                    getElement(wait, "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[1]");
-            if (bottomSheet != null && bottomSheet.isDisplayed()){
-                MobileElement tabOutSide =
-                        getElement(wait, "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[2]");
-                if (tabOutSide != null) tabOutSide.click();
-            }
-            System.out.println("✅ Close bottom sheet");
-        } catch (Exception ignored){
-        }
-        System.out.println("✅ Welcome to Hi FPT!!!");
-    }
-
-    private static void readTestDataFromExcel(String excelFilePath, AppiumDriver<MobileElement> appiumDriver, WebDriverWait wait) {
-        try (FileInputStream fis = new FileInputStream(excelFilePath);
-             Workbook workbook = new XSSFWorkbook(fis)) {
-
-            Sheet sheet = workbook.getSheetAt(0);
-            int totalCases = sheet.getLastRowNum();
-            boolean allTestsPassed = true;
-            boolean isModemError = false;
-
-            for (int i = 1; i <= totalCases; i++) {
-                Row row = sheet.getRow(i);
-                if (row == null || row.getCell(0) == null) continue;
-
-                String testCaseName = getCellValue(row, 0);
-                String action = getCellValue(row, 1);
-                String ID = getCellValue(row, 2);
-                String coordinates = getCellValue(row, 3);
-                String inputData = getCellValue(row, 4);
+            for (Map<String, Object> tc : testCases) {
+                String testCaseName = (String) tc.getOrDefault("name", "");
+                String action = (String) tc.getOrDefault("action", "");
+                String ID = (String) tc.getOrDefault("id", "");
+                String coordinates = (String) tc.getOrDefault("coordinates", "");
+                String inputData = (String) tc.getOrDefault("input", "");
 
                 if (testCaseName.trim().isEmpty() || action.trim().isEmpty()) {
-                    System.out.println("Invalid test case format at row " + (i + 1));
+                    System.out.println("⚠️ Invalid test case format: " + tc);
                     continue;
                 }
-                Thread.sleep(1500);
 
+                Thread.sleep(1500);
                 System.out.println("⮑ Running case: " + testCaseName);
 
                 boolean resultOfTest = performAction(appiumDriver, action, ID, inputData, coordinates);
 
-                // Kiểm tra lỗi chỉ một lần
+                // Kiểm tra popup lỗi (chỉ một lần)
                 if (!isModemError) {
                     MobileElement popUpNotHaveInfoModem = getElement(wait, "//android.widget.TextView[@text=\"Mất kết nối với Modem\"]");
                     if (popUpNotHaveInfoModem != null && popUpNotHaveInfoModem.isDisplayed()) {
                         MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
                         if (clickClose != null) clickClose.click();
                         System.out.println("⚠️ Vui lòng đổi sang Hợp đồng khác vì Hợp đồng này không có thông tin Modem");
-                        // Stay in app 10s before stop process
                         Thread.sleep(6000);
-                        isModemError = true; // Đánh dấu đã xử lý lỗi
+                        isModemError = true;
                         System.exit(1);
                     }
+
                     MobileElement popupSystemError = getElement(wait, "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
-                    if (popupSystemError != null && popupSystemError.isDisplayed()){
+                    if (popupSystemError != null && popupSystemError.isDisplayed()) {
                         MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
                         if (clickClose != null) clickClose.click();
-                        System.out.println("Chưa hiển thị được thông tin");
-                        // Stay in app 10s before stop process
+                        System.out.println("⚠️ Chưa hiển thị được thông tin");
                         Thread.sleep(6000);
-                        isModemError = true; // Đánh dấu đã xử lý lỗi
+                        isModemError = true;
                         System.exit(1);
                     }
-                    MobileElement popupNotHaveInfoModem = getElement(wait, "//android.widget.TextView[@text=\"Chưa có thông tin\"]");
-                    if (popupNotHaveInfoModem != null && popupNotHaveInfoModem.isDisplayed()){
+
+                    MobileElement popupNotHaveInfo = getElement(wait, "//android.widget.TextView[@text=\"Chưa có thông tin\"]");
+                    if (popupNotHaveInfo != null && popupNotHaveInfo.isDisplayed()) {
                         MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
                         if (clickClose != null) clickClose.click();
-                        System.out.println("Chưa có thông tin Modem");
-                        // Stay in app 10s before stop process
+                        System.out.println("⚠️ Chưa có thông tin Modem");
                         Thread.sleep(6000);
-                        isModemError = true; // Đánh dấu đã xử lý lỗi
+                        isModemError = true;
                         System.exit(1);
                     }
                 }
+
                 // Ghi nhận kết quả
-                if (resultOfTest) {
-                } else {
+                if (!resultOfTest) {
                     allTestsPassed = false;
                     System.out.println("❌ Test case failed: " + testCaseName);
                 }
             }
+
             System.out.println(allTestsPassed ? "✅ PASS - All test cases have been run" : "❌ FAIL - Some test cases failed");
 
-            // Xuất báo cáo
-            String reportFilePath = "D:\\Test_Report.xlsx"; //Remember to change
-            Report.exportReport(excelFilePath, reportFilePath);
-
-            // Stay in app 15s before stop process
-            Thread.sleep(6000);
-            // Dừng chương trình ngay sau khi chạy hết test cases
-            System.exit(1);
-
-        } catch (IOException e) {
-            System.err.println("Error reading Excel file: " + e.getMessage());
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.err.println("❌ Error reading YAML test data: " + e.getMessage());
         }
     }
 
@@ -287,22 +199,6 @@ public class HiFPTAutomationTestReadTCs {
                 failedElements.add(ID); // Đánh dấu ID này đã bị lỗi
             }
             return null;  // Trả về null để bỏ qua test case này
-        }
-    }
-
-    public static String getCellValue(Row row, int index) {
-        Cell cell = row.getCell(index);
-        return (cell != null) ? cell.toString().trim() : "";
-    }
-
-    private static void takeFinalScreenshot(AppiumDriver<MobileElement> driver, String filePath) {
-        try {
-            File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            File targetFile = new File(filePath);
-            FileUtils.copyFile(srcFile, targetFile);
-            System.out.println("📸 Screenshot saved to: " + filePath);
-        } catch (IOException e) {
-            System.err.println("❌ Failed to take screenshot: " + e.getMessage());
         }
     }
 }

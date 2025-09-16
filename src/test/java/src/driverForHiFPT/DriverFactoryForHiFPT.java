@@ -6,10 +6,11 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DriverFactoryForHiFPT implements MobileCapabilityTypeEx {
-    public static AppiumDriver<MobileElement> getDriver(Platform platform) {
+    public static AppiumDriver<MobileElement> getDriver(Platform platform) throws MalformedURLException {
         AppiumDriver<MobileElement> driver;
         // Desired Caps
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -21,10 +22,10 @@ public class DriverFactoryForHiFPT implements MobileCapabilityTypeEx {
         //desiredCapabilities.setCapability(NO_RESET, true);
 
         // Specify Appium Server URL
-        URL appiumServer = null;
+        URL appiumServer = new URL("http://0.0.0.0:4723/wd/hub");
 
         try {
-            appiumServer = new URL("http://localhost:4723");
+            appiumServer = new URL("http://0.0.0.0:4723/wd/hub");
         } catch (Exception e) {
             e.printStackTrace();
         }

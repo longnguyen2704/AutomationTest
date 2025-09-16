@@ -2,21 +2,29 @@ package src.driverForHiFPT;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.yaml.snakeyaml.Yaml;
+import java.io.*;
+import java.util.*;
+import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Report {
-    public static void exportReport(String excelFilePath, String reportFilePath) {
-        try (FileInputStream fis = new FileInputStream(excelFilePath);
-             Workbook testCaseWorkbook = new XSSFWorkbook(fis);
+    public static void exportReportFromYamlReport(String yamlFilePath, String reportFilePath) {
+        try (InputStream inputStream = new FileInputStream(yamlFilePath);
              Workbook reportWorkbook = new XSSFWorkbook()) {
 
-            Sheet testCaseSheet = testCaseWorkbook.getSheetAt(0); // Lấy sheet đầu tiên
+            // Parse YAML
+            Yaml yaml = new Yaml();
+            Map<String, Object> data = yaml.load(inputStream);
+            List<Map<String, String>> testCases = (List<Map<String, String>>) data.get("testcases");
+
+            // Tạo sheet cho báo cáo
             Sheet reportSheet = reportWorkbook.createSheet("Test Report");
 
-            // Tạo tiêu đề cho file báo cáo
+            // Tạo header
             String[] columns = {"Test Case", "Action", "ID", "Input Data", "Result"};
             Row headerRow = reportSheet.createRow(0);
             CellStyle headerStyle = reportWorkbook.createCellStyle();
@@ -30,27 +38,22 @@ public class Report {
                 cell.setCellStyle(headerStyle);
             }
 
-            // Duyệt từng dòng trong file test case
+            // Ghi test cases từ YAML vào báo cáo
             int rowNum = 1;
-            for (int i = 1; i <= testCaseSheet.getLastRowNum(); i++) {
-                Row testCaseRow = testCaseSheet.getRow(i);
-                if (testCaseRow == null || testCaseRow.getCell(0) == null) continue;
+            for (Map<String, String> tc : testCases) {
+                String testCaseName = tc.get("name");
+                String action = tc.get("action");
+                String elementID = tc.get("id");
+                String inputData = tc.get("input");
 
-                // Lấy dữ liệu test case
-                String testCaseName = getCellValue(testCaseRow, 0);
-                String action = getCellValue(testCaseRow, 1);
-                String elementID = getCellValue(testCaseRow, 2);
-                String inputData = getCellValue(testCaseRow, 4);
-
-                // Kiểm tra nếu testCaseName chứa "false"
+                // Kiểm tra result
                 String result = null;
                 if (testCaseName.toLowerCase().contains("false")) {
                     result = "False";
-                } else if (testCaseName.toLowerCase().contains("true")){
-                    result = "Passed"; // Bạn có thể thay đổi kết quả thực tế ở đây
+                } else if (testCaseName.toLowerCase().contains("true")) {
+                    result = "Passed";
                 }
 
-                // Ghi dữ liệu vào báo cáo
                 Row reportRow = reportSheet.createRow(rowNum++);
                 reportRow.createCell(0).setCellValue(testCaseName);
                 reportRow.createCell(1).setCellValue(action);
@@ -59,11 +62,10 @@ public class Report {
                 reportRow.createCell(4).setCellValue(result);
             }
 
-            // Tự động căn chỉnh độ rộng cột
+            // Auto size column
             for (int i = 0; i < columns.length; i++) {
                 reportSheet.autoSizeColumn(i);
             }
-
             // Lưu file báo cáo
             try (FileOutputStream fileOut = new FileOutputStream(reportFilePath)) {
                 reportWorkbook.write(fileOut);
@@ -73,10 +75,5 @@ public class Report {
         } catch (IOException e) {
             System.err.println("❌ Error exporting report: " + e.getMessage());
         }
-    }
-
-    private static String getCellValue(Row row, int index) {
-        Cell cell = row.getCell(index);
-        return (cell != null) ? cell.toString().trim() : "";
     }
 }
