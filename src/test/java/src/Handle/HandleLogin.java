@@ -15,6 +15,7 @@ public class HandleLogin {
             System.out.println("✅ Input phone number successfully");
 
             MobileElement buttonContinue = getElement(wait, "//android.widget.TextView[@text=\"Tiếp tục\"]");
+            assert buttonContinue != null;
             if (buttonContinue.isDisplayed() || buttonContinue.isEnabled())buttonContinue.click();
             System.out.println("✅ Click success");
 
@@ -62,9 +63,7 @@ public class HandleLogin {
                 System.out.println("No have popup force update");
             }
 
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        } catch (InterruptedException ex) {
+        } catch (IOException | InterruptedException ex) {
             throw new RuntimeException(ex);
         }
     }

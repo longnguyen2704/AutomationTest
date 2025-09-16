@@ -12,8 +12,8 @@ public class HandlePopupNotification {
             if (popUp != null && popUp.isDisplayed()) {
                 MobileElement clickNo = getElement(wait, "//android.widget.TextView[@text=\"Để sau\"]");
                 if (clickNo != null) clickNo.click();
+                System.out.println("✅ Not allow notification success");
             }
-            System.out.println("✅ Not allow notification success");
         } catch (Exception ignored) {
         }
         try {
@@ -23,8 +23,8 @@ public class HandlePopupNotification {
                 MobileElement tabOutSide =
                         getElement(wait, "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[2]");
                 if (tabOutSide != null) tabOutSide.click();
+                System.out.println("✅ Close bottom sheet");
             }
-            System.out.println("✅ Close bottom sheet");
         } catch (Exception ignored) {
         }
         System.out.println("✅ Welcome to Hi FPT!!!");
