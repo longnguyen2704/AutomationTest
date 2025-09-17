@@ -16,7 +16,7 @@ import static src.driverForHiFPT.getElement.getElement;
 public class ReadTestcaseByFileYaml {
     public static void readTestDataFromYaml(String yamlFilePath, AppiumDriver<MobileElement> appiumDriver, WebDriverWait wait) {
         boolean allTestsPassed = true;
-        boolean isModemError = false;
+//        boolean isModemError = false;
 
         try (InputStream inputStream = new FileInputStream(yamlFilePath)) {
             Yaml yaml = new Yaml();
@@ -40,39 +40,39 @@ public class ReadTestcaseByFileYaml {
                 System.out.println("⮑ Running case: " + testCaseName);
 
                 boolean resultOfTest = performAction(appiumDriver, action, ID, inputData, coordinates);
-
-                // Kiểm tra popup lỗi (chỉ một lần)
-                if (!isModemError) {
-                    MobileElement popUpNotHaveInfoModem = getElement(wait, "//android.widget.TextView[@text=\"Mất kết nối với Modem\"]");
-                    if (popUpNotHaveInfoModem != null && popUpNotHaveInfoModem.isDisplayed()) {
-                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
-                        if (clickClose != null) clickClose.click();
-                        System.out.println("⚠️ Vui lòng đổi sang Hợp đồng khác vì Hợp đồng này không có thông tin Modem");
-                        Thread.sleep(6000);
-                        isModemError = true;
-                        System.exit(1);
-                    }
-
-                    MobileElement popupSystemError = getElement(wait, "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
-                    if (popupSystemError != null && popupSystemError.isDisplayed()) {
-                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
-                        if (clickClose != null) clickClose.click();
-                        System.out.println("⚠️ Chưa hiển thị được thông tin");
-                        Thread.sleep(6000);
-                        isModemError = true;
-                        System.exit(1);
-                    }
-
-                    MobileElement popupNotHaveInfo = getElement(wait, "//android.widget.TextView[@text=\"Chưa có thông tin\"]");
-                    if (popupNotHaveInfo != null && popupNotHaveInfo.isDisplayed()) {
-                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
-                        if (clickClose != null) clickClose.click();
-                        System.out.println("⚠️ Chưa có thông tin Modem");
-                        Thread.sleep(6000);
-                        isModemError = true;
-                        System.exit(1);
-                    }
-                }
+//
+//                // Kiểm tra popup lỗi (chỉ một lần)
+//                if (!isModemError) {
+//                    MobileElement popUpNotHaveInfoModem = getElement(wait, "//android.widget.TextView[@text=\"Mất kết nối với Modem\"]");
+//                    if (popUpNotHaveInfoModem != null && popUpNotHaveInfoModem.isDisplayed()) {
+//                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
+//                        if (clickClose != null) clickClose.click();
+//                        System.out.println("⚠️ Vui lòng đổi sang Hợp đồng khác vì Hợp đồng này không có thông tin Modem");
+//                        Thread.sleep(6000);
+//                        isModemError = true;
+//                        System.exit(1);
+//                    }
+//
+//                    MobileElement popupSystemError = getElement(wait, "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
+//                    if (popupSystemError != null && popupSystemError.isDisplayed()) {
+//                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
+//                        if (clickClose != null) clickClose.click();
+//                        System.out.println("⚠️ Chưa hiển thị được thông tin");
+//                        Thread.sleep(6000);
+//                        isModemError = true;
+//                        System.exit(1);
+//                    }
+//
+//                    MobileElement popupNotHaveInfo = getElement(wait, "//android.widget.TextView[@text=\"Chưa có thông tin\"]");
+//                    if (popupNotHaveInfo != null && popupNotHaveInfo.isDisplayed()) {
+//                        MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
+//                        if (clickClose != null) clickClose.click();
+//                        System.out.println("⚠️ Chưa có thông tin Modem");
+//                        Thread.sleep(6000);
+//                        isModemError = true;
+//                        System.exit(1);
+//                    }
+//                }
 
                 // Ghi nhận kết quả
                 if (!resultOfTest) {

@@ -8,7 +8,7 @@ import java.io.IOException;
 import static src.driverForHiFPT.getElement.getElement;
 
 public class HandleLogin {
-    public static void LoginScreen (WebDriverWait wait){
+    public static void LoginScreen (WebDriverWait wait) throws InterruptedException {
         try {
             MobileElement loginScreenOTP = getElement(wait, "//android.widget.EditText");
             if (loginScreenOTP != null) loginScreenOTP.sendKeys("0764543021");
@@ -17,7 +17,7 @@ public class HandleLogin {
             MobileElement buttonContinue = getElement(wait, "//android.widget.TextView[@text=\"Tiếp tục\"]");
             assert buttonContinue != null;
             if (buttonContinue.isDisplayed() || buttonContinue.isEnabled())buttonContinue.click();
-            System.out.println("✅ Click success");
+            System.out.println("✅ Click button continue success");
 
             MobileElement PopupBlockSignUp = getElement(wait, "//android.widget.TextView[@text=\"Khóa đăng nhập\"]");
             if (PopupBlockSignUp != null && PopupBlockSignUp.isDisplayed()) {
@@ -56,15 +56,22 @@ public class HandleLogin {
                 System.out.println("✅ Input OTP successfully");
             }
 
-            MobileElement popupForceUpdate = getElement(wait, "//android.widget.TextView[@text=\"Không nhắc lại\"]");
-            assert popupForceUpdate != null;
-            if (popupForceUpdate.isDisplayed())popupForceUpdate.click();
-            else {
-                System.out.println("No have popup force update");
+            MobileElement forceUpdate =
+                    getElement(wait,"//android.widget.TextView[@text=\"Không nhắc lại\"]");
+            if (forceUpdate != null && forceUpdate.isDisplayed()){
+                forceUpdate.click();
+            }
+
+            MobileElement systemError =
+                    getElement(wait, "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
+            if (systemError != null && systemError.isDisplayed()){
+                System.exit(1);
             }
 
         } catch (IOException | InterruptedException ex) {
             throw new RuntimeException(ex);
         }
+        Thread.sleep(4000);
+        System.out.println("✅ Welcome to Hi FPT!!!");
     }
 }

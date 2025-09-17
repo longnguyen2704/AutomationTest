@@ -3,6 +3,7 @@ package src.driverForHiFPT;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -18,6 +19,8 @@ public class AppiumLaunchTestForHiFPT implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.rad.hifpt");
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.rad.hifpt.activities.MainAppActivity");
+        desiredCapabilities.setCapability("chromedriver_autodownload", true);
+
         //desiredCapabilities.setCapability(NO_RESET, true);
 
         // Specify Appium Server URL

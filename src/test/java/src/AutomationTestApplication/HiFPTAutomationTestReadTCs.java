@@ -21,15 +21,24 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import static src.Handle.ReadTestcaseByFileYaml.readTestDataFromYaml;
+import static src.Handle.Webview.switchToNative;
+import static src.Handle.Webview.switchToWebView;
 
 public class HiFPTAutomationTestReadTCs {
 
     public static void main(String[] args) throws MalformedURLException {
+
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForHiFPT.getDriver(Platform.ANDROID);
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 5);
+        WebDriverWait wait = new WebDriverWait(appiumDriver, 8);
 
         try {
             System.out.println("=====Start running Automation Test=====");
+
+            // 👉 Quay lại Native
+            switchToNative(appiumDriver);
+            // 👉 Switch sang WebView
+            switchToWebView(appiumDriver);
+
 
             // Xử lý đăng nhập
             HandleLogin.LoginScreen(wait);
@@ -38,10 +47,9 @@ public class HiFPTAutomationTestReadTCs {
             HandlePopupNotification.handlePopUpNotification(wait);
 
             // Handle swipe up and down
-            SwipeUpAndDown.scrollUp(appiumDriver,3);
-//            SwipeUpAndDown.scrollDown(appiumDriver);
+            SwipeUpAndDown.scrollUp(appiumDriver,2);
 
-            // Đọc file Excel & thực thi test cases
+            // Đọc file YAML & thực thi test cases
             String fileYAML = "/Users/baymax/test.yaml"; //Remember to change
             readTestDataFromYaml(fileYAML, appiumDriver, wait);
 

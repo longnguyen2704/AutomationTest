@@ -19,6 +19,8 @@ public class DriverFactoryForHiFPT implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.rad.hifpt");
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.rad.hifpt.activities.MainAppActivity");
+        desiredCapabilities.setCapability("chromedriver_autodownload", true);
+
         //desiredCapabilities.setCapability(NO_RESET, true);
 
         // Specify Appium Server URL

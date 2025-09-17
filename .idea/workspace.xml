@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/Handle/ReadTestcaseByFileYaml.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/src/Handle/Webview.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/HandleLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/HandleLogin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/HandlePopupNotification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/HandlePopupNotification.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/SwipeUpAndDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/SwipeUpAndDown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/Report.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/ReadTestcaseByFileYaml.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/ReadTestcaseByFileYaml.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/AppiumLaunchTestForHiFPT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/AppiumLaunchTestForHiFPT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/DriverFactoryForHiFPT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/DriverFactoryForHiFPT.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +41,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/longnguyen2704/AutomationTest.git&quot;,
+    &quot;url&quot;: &quot;https://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@github.com/longnguyen2704/AutomationTest.git&quot;,
     &quot;accountId&quot;: &quot;4ffa3618-0d06-4c6c-b256-ec3a379719d1&quot;
   }
 }</component>
@@ -60,6 +61,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.AppiumLaunchTestForHiFPT.executor&quot;: &quot;Run&quot;,
     &quot;Application.HiFPTAutomationTestReadTCs.executor&quot;: &quot;Run&quot;,
     &quot;Maven.Appium_Mobile [org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -93,6 +95,19 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.HiFPTAutomationTestReadTCs">
+    <configuration name="AppiumLaunchTestForHiFPT" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="src.driverForHiFPT.AppiumLaunchTestForHiFPT" />
+      <module name="Appium_Mobile" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="src.driverForHiFPT.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="HiFPTAutomationTestReadTCs" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="src.AutomationTestApplication.HiFPTAutomationTestReadTCs" />
       <module name="Appium_Mobile" />
@@ -113,19 +128,6 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="src.driverForMdealer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="eMoneyAutoTestByReadTCs" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="src.AutomationTestApplication.eMoneyAutoTestByReadTCs" />
-      <module name="Appium_Mobile" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="src.driverForEmoney.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -165,19 +167,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.AppiumLaunchTestForHiFPT" />
       <item itemvalue="Application.HiFPTAutomationTestReadTCs" />
       <item itemvalue="Application.downloadAppCenter" />
-      <item itemvalue="Application.eMoneyAutoTestByReadTCs" />
       <item itemvalue="Application.mDealerAutomationTestReadTCs" />
       <item itemvalue="TestNG.eMoneyAutoTestByReadTCs.autoTestEmoney" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.HiFPTAutomationTestReadTCs" />
+        <item itemvalue="Application.AppiumLaunchTestForHiFPT" />
         <item itemvalue="Application.mDealerAutomationTestReadTCs" />
         <item itemvalue="Application.downloadAppCenter" />
         <item itemvalue="TestNG.eMoneyAutoTestByReadTCs.autoTestEmoney" />
-        <item itemvalue="Application.eMoneyAutoTestByReadTCs" />
       </list>
     </recent_temporary>
   </component>

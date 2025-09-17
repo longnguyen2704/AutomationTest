@@ -14,8 +14,10 @@ public class HandlePopupNotification {
                 if (clickNo != null) clickNo.click();
                 System.out.println("✅ Not allow notification success");
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+
         try {
             MobileElement bottomSheet =
                     getElement(wait, "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[1]");
@@ -25,8 +27,8 @@ public class HandlePopupNotification {
                 if (tabOutSide != null) tabOutSide.click();
                 System.out.println("✅ Close bottom sheet");
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        System.out.println("✅ Welcome to Hi FPT!!!");
     }
 }
