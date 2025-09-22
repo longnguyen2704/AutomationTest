@@ -1,41 +1,56 @@
 package src.Handle;
 
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 
-import static src.driverForHiFPT.getElement.getElement;
+import static src.driverForHiFPT.getElements.getElement;
 
 public class HandleLogin {
-    public static void LoginScreen (WebDriverWait wait) throws InterruptedException {
+    public static void LoginScreen(AppiumDriver<MobileElement> driver) throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
         try {
-            MobileElement loginScreenOTP = getElement(wait, "//android.widget.EditText");
-            if (loginScreenOTP != null) loginScreenOTP.sendKeys("0764543021");
-            System.out.println("✅ Input phone number successfully");
+            // Nhập số điện thoại
+            MobileElement loginScreenOTP = (MobileElement) wait.until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText"))
+            );
+            if (loginScreenOTP.isDisplayed()) {
+                loginScreenOTP.sendKeys("0908418782");
+                System.out.println("✅ Input phone number successfully");
+            }
 
-            MobileElement buttonContinue = getElement(wait, "//android.widget.TextView[@text=\"Tiếp tục\"]");
-            assert buttonContinue != null;
-            if (buttonContinue.isDisplayed() || buttonContinue.isEnabled())buttonContinue.click();
-            System.out.println("✅ Click button continue success");
+            // Click "Tiếp tục"
+            MobileElement buttonContinue = (MobileElement) wait.until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.TextView[@text=\"Tiếp tục\"]"))
+            );
+            if (buttonContinue.isDisplayed() || buttonContinue.isEnabled()) {
+                buttonContinue.click();
+                System.out.println("✅ Click button continue success");
+            }
 
-            MobileElement PopupBlockSignUp = getElement(wait, "//android.widget.TextView[@text=\"Khóa đăng nhập\"]");
-            if (PopupBlockSignUp != null && PopupBlockSignUp.isDisplayed()) {
-                MobileElement clickClose = getElement(wait, "//android.widget.TextView[@text=\"Đóng\"]");
+            // Popup "Khóa đăng nhập"
+            MobileElement popupBlockSignUp = getElement(driver, "//android.widget.TextView[@text=\"Khóa đăng nhập\"]");
+            if (popupBlockSignUp != null && popupBlockSignUp.isDisplayed()) {
+                MobileElement clickClose = getElement(driver, "//android.widget.TextView[@text=\"Đóng\"]");
                 if (clickClose != null) clickClose.click();
                 System.out.println("❌ Login unsuccessfully because system is showing error popup");
-
-                // Dừng chương trình ngay lập tức
-                System.exit(1);  // Thoát chương trình với mã lỗi 1
+                System.exit(1);
                 return;
             }
 
-            MobileElement ShowKeyBoard = getElement(wait, "android.view.View");
-            if (ShowKeyBoard != null && !ShowKeyBoard.isDisplayed()) {
-                ShowKeyBoard.click();
+            // Kiểm tra bàn phím ảo
+            MobileElement showKeyboard = getElement(driver, "android.view.View");
+            if (showKeyboard != null && !showKeyboard.isDisplayed()) {
+                showKeyboard.click();
             }
 
-            MobileElement inputPIN = getElement(wait, "//android.widget.TextView[@text=\"Nhập mã PIN\"]");
+            // Nhập PIN
+            MobileElement inputPIN = getElement(driver, "//android.widget.TextView[@text=\"Nhập mã PIN\"]");
             if (inputPIN != null) {
                 inputPIN.click();
                 String PIN = "123456";
@@ -45,7 +60,9 @@ public class HandleLogin {
                 }
                 System.out.println("✅ Input PIN successfully");
             }
-            MobileElement inputOTP = getElement(wait, "//android.widget.TextView[@text=\"Mã OTP vừa được gửi đến số điện thoại\"]");
+
+            // Nhập OTP
+            MobileElement inputOTP = getElement(driver, "//android.widget.TextView[@text=\"Mã OTP vừa được gửi đến số điện thoại\"]");
             if (inputOTP != null && inputOTP.isDisplayed()) {
                 inputOTP.click();
                 String OTP = "1309";
@@ -56,21 +73,23 @@ public class HandleLogin {
                 System.out.println("✅ Input OTP successfully");
             }
 
-            MobileElement forceUpdate =
-                    getElement(wait,"//android.widget.TextView[@text=\"Không nhắc lại\"]");
-            if (forceUpdate != null && forceUpdate.isDisplayed()){
+            // Popup force update
+            MobileElement forceUpdate = getElement(driver, "//android.widget.TextView[@text=\"Không nhắc lại\"]");
+            if (forceUpdate != null && forceUpdate.isDisplayed()) {
                 forceUpdate.click();
+                System.out.println("✅ Close popup force update");
             }
 
-            MobileElement systemError =
-                    getElement(wait, "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
-            if (systemError != null && systemError.isDisplayed()){
+            // Popup system error
+            MobileElement systemError = getElement(driver, "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
+            if (systemError != null && systemError.isDisplayed()) {
                 System.exit(1);
             }
 
         } catch (IOException | InterruptedException ex) {
             throw new RuntimeException(ex);
         }
+
         Thread.sleep(4000);
         System.out.println("✅ Welcome to Hi FPT!!!");
     }

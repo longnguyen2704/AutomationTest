@@ -19,9 +19,8 @@ public class AppiumLaunchTestForHiFPT implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(UDID, "R7AWA03KZ0M");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.rad.hifpt");
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.rad.hifpt.activities.MainAppActivity");
-        desiredCapabilities.setCapability("chromedriver_autodownload", true);
-
-        //desiredCapabilities.setCapability(NO_RESET, true);
+        desiredCapabilities.setCapability("chromedriverAutodownload", true);
+        desiredCapabilities.setCapability("chromedriverExecutable","/Users/baymax/.cache/selenium/chromedriver/mac-arm64/140.0.7339.82/chromedriver");
 
         // Specify Appium Server URL
         URL appiumServer = new URL("http://0.0.0.0:4723/wd/hub");

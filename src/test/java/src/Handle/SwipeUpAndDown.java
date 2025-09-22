@@ -16,8 +16,8 @@ public class SwipeUpAndDown {
         int width = appiumDriver.manage().window().getSize().width;
 
         int startX = width / 2;
-        int startY = (int) (height * 0.8);
-        int endY = (int) (height * 0.2);
+        int startY = (int) (height * 0.65);
+        int endY = (int) (height * 0.35);
 
         for (int i = 0; i < times; i++) {
             new TouchAction<>(appiumDriver)
@@ -27,23 +27,6 @@ public class SwipeUpAndDown {
                     .release()
                     .perform();
         }
-        System.out.println("Scroll success");
+        System.out.println("✅ Scroll success");
     }
-
-    // Scroll từ trên xuống dưới (scroll down)
-//    public static void scrollDown(AppiumDriver<MobileElement> appiumDriver) {
-//        int height = appiumDriver.manage().window().getSize().height;
-//        int width = appiumDriver.manage().window().getSize().width;
-//
-//        int startX = width / 2;
-//        int startY = (int) (height * 0.18);
-//        int endY = (int) (height * 0.82);
-//
-//        new TouchAction<>(appiumDriver)
-//                .press(PointOption.point(startX, startY))
-//                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
-//                .moveTo(PointOption.point(startX, endY))
-//                .release()
-//                .perform();
-//    }
 }

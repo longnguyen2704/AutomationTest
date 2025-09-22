@@ -1,29 +1,26 @@
 package src.Handle;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static src.driverForHiFPT.getElement.getElement;
+import static src.driverForHiFPT.getElements.getElement;
 
 public class HandlePopupNotification {
-    public static void handlePopUpNotification(WebDriverWait wait) {
+    public static void handlePopUpNotification(AppiumDriver driver) {
         try {
-            MobileElement popUp = getElement(wait, "//android.widget.TextView[@text=\"Bật  thông  báo\"]");
+            // Popup bật thông báo
+            MobileElement popUp = getElement(driver, "//android.widget.TextView[@text=\"Bật  thông  báo\"]");
             if (popUp != null && popUp.isDisplayed()) {
-                MobileElement clickNo = getElement(wait, "//android.widget.TextView[@text=\"Để sau\"]");
+                MobileElement clickNo = getElement(driver, "//android.widget.TextView[@text=\"Để sau\"]");
                 if (clickNo != null) clickNo.click();
                 System.out.println("✅ Not allow notification success");
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            MobileElement bottomSheet =
-                    getElement(wait, "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[1]");
+            // Bottom sheet
+            MobileElement bottomSheet = getElement(driver,
+                    "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[1]");
             if (bottomSheet != null && bottomSheet.isDisplayed()) {
-                MobileElement tabOutSide =
-                        getElement(wait, "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[2]");
+                MobileElement tabOutSide = getElement(driver,
+                        "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[2]");
                 if (tabOutSide != null) tabOutSide.click();
                 System.out.println("✅ Close bottom sheet");
             }
