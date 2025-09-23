@@ -2,8 +2,6 @@ package src.Handle;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import org.openqa.selenium.JavascriptExecutor;
-
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,13 +22,11 @@ public class Webview {
             Set<String> contexts = appiumDriver.getContextHandles();
             System.out.println("👉 Available contexts: " + contexts);
 
-            // 1) ưu tiên webview chứa package (nếu có)
             Optional<String> webview = contexts.stream()
                     .filter(c -> c != null && c.toUpperCase().contains("WEBVIEW"))
                     .filter(c -> preferredPackage == null || c.toLowerCase().contains(preferredPackage.toLowerCase()))
                     .findFirst();
 
-            // 2) fallback: bất kỳ webview nào
             if (!webview.isPresent()) {
                 webview = contexts.stream()
                         .filter(c -> c != null && c.toUpperCase().contains("WEBVIEW"))
@@ -41,19 +37,18 @@ public class Webview {
                 appiumDriver.context(webview.get());
                 System.out.println("✅ Switched to WebView: " + appiumDriver.getContext());
 
-                // (tùy chọn) kiểm tra DOM ready nếu muốn:
+                // 👉 Chờ thêm 2-3s sau khi switch context
                 try {
-                    Object ready = ((JavascriptExecutor) appiumDriver).executeScript("return document.readyState");
-                    System.out.println("Document readyState: " + ready);
-                } catch (Exception ignored) {
-                    // nếu chưa thực sự là JS context thì có thể ném exception -> bỏ qua
+                    Thread.sleep(2500); // 2.5s
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 }
 
                 return true;
             }
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
@@ -63,6 +58,7 @@ public class Webview {
         System.out.println("⚠️ No WebView context found after " + timeoutSeconds + "s");
         return false;
     }
+
     public static boolean switchToNative(AppiumDriver<MobileElement> appiumDriver, int timeoutSeconds) {
         long end = System.currentTimeMillis() + timeoutSeconds * 1000L;
 

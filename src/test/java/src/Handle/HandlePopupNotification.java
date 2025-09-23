@@ -3,7 +3,7 @@ package src.Handle;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 
-import static src.driverForHiFPT.getElements.getElement;
+import static src.Handle.ReadTestcaseByFileYaml.getElement;
 
 public class HandlePopupNotification {
     public static void handlePopUpNotification(AppiumDriver driver) {
@@ -23,6 +23,13 @@ public class HandlePopupNotification {
                         "//android.view.ViewGroup[@resource-id=\"android:id/content\"]/android.view.View/android.view.View/android.view.View[2]");
                 if (tabOutSide != null) tabOutSide.click();
                 System.out.println("✅ Close bottom sheet");
+            }
+            // Popup system error
+            MobileElement popupSystemError = getElement(driver,
+                    "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
+            if (popupSystemError != null && popupSystemError.isDisplayed()){
+                System.out.println("System error. Pleaser try again!");
+                driver.quit();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

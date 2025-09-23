@@ -6,6 +6,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.yaml.snakeyaml.Yaml;
@@ -44,7 +45,7 @@ public class ReadTestcaseByFileYaml {
                     continue;
                 }
 
-                Thread.sleep(1500);
+                Thread.sleep(2500);
                 System.out.println("⮑ Running case: " + testCaseName);
 
                 boolean resultOfTest = performAction(appiumDriver, action, ID, inputData, coordinates);
@@ -131,16 +132,42 @@ public class ReadTestcaseByFileYaml {
     public static boolean clickElement(AppiumDriver<MobileElement> driver, String id) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, 10);
+            String currentContext = driver.getContext();
+            System.out.println("👉 Current context: " + currentContext);
 
-            // Tìm element theo resource-id
-            MobileElement element = (MobileElement) wait.until(
-                    ExpectedConditions.presenceOfElementLocated(By.id(id))
-            );
-            // Chờ element có thể click
-            wait.until(ExpectedConditions.elementToBeClickable(element));
-            element.click();
-            System.out.println("✅ Click success at: " + id);
-            return true;
+            if (currentContext != null && currentContext.toUpperCase().contains("WEBVIEW")) {
+                // Case 2: WebView (HTML DOM)
+                WebElement element;
+                if (id.startsWith("//")) {
+                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(id)));
+                } else if (id.startsWith("#") || id.contains(".")) {
+                    // nếu bạn muốn hỗ trợ CSS selector
+                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(id)));
+                } else {
+                    element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+                }
+
+                wait.until(ExpectedConditions.elementToBeClickable(element));
+                element.click();
+                System.out.println("✅ [WebView] Click success at: " + id);
+                return true;
+
+            } else {
+                // Case 1: Native app
+                MobileElement element;
+                if (id.startsWith("com")) {
+                    element = (MobileElement) wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.id(id)));
+                } else if (id.startsWith("//")) {
+                    element = (MobileElement) wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.xpath(id)));
+                } else {
+                    element = (MobileElement) wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.className(id)));
+                }
+
+                wait.until(ExpectedConditions.elementToBeClickable(element));
+                element.click();
+                System.out.println("✅ [Native] Click success at: " + id);
+                return true;
+            }
 
         } catch (Exception e) {
             System.out.println("❌ Click failed at: " + id + " - " + e.getMessage());
@@ -153,17 +180,44 @@ public class ReadTestcaseByFileYaml {
 
         try {
             WebDriverWait wait = new WebDriverWait(driver, 10);
+            String currentContext = driver.getContext();
+            System.out.println("👉 Current context: " + currentContext);
 
-            // Chờ element xuất hiện và hiển thị
-            MobileElement inputField = (MobileElement) wait.until(
-                    ExpectedConditions.visibilityOfElementLocated(By.id(id))
-            );
+            if (currentContext != null && currentContext.toUpperCase().contains("WEBVIEW")) {
+                // Case 2: WebView (HTML DOM)
+                WebElement inputField;
+                if (id.startsWith("//")) {
+                    inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(id)));
+                } else if (id.startsWith("#") || id.contains(".")) {
+                    // CSS selector
+                    inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(id)));
+                } else {
+                    inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+                }
 
-            inputField.clear();
-            inputField.sendKeys(inputData);
+                inputField.clear();
+                inputField.sendKeys(inputData);
 
-            System.out.println("✅ Input success at: " + id + " -> " + inputData);
-            return true;
+                System.out.println("✅ [WebView] Input success at: " + id + " -> " + inputData);
+                return true;
+
+            } else {
+                // Case 1: Native app
+                MobileElement inputField;
+                if (id.startsWith("com")) {
+                    inputField = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.id(id)));
+                } else if (id.startsWith("//")) {
+                    inputField = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.xpath(id)));
+                } else {
+                    inputField = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.className(id)));
+                }
+
+                inputField.clear();
+                inputField.sendKeys(inputData);
+
+                System.out.println("✅ [Native] Input success at: " + id + " -> " + inputData);
+                return true;
+            }
 
         } catch (Exception e) {
             System.out.println("❌ Input failed at: " + id + " - " + e.getMessage());
@@ -190,8 +244,8 @@ public class ReadTestcaseByFileYaml {
 
     public static final Set<String> failedElements = new HashSet<>(); // Lưu ID đã lỗi
 
-    public static MobileElement getElement(AppiumDriver<MobileElement> driver, String locator) {
-        if (locator == null || locator.trim().isEmpty()) return null;
+    public static MobileElement getElement(AppiumDriver<MobileElement> driver, String id) {
+        if (id == null || id.trim().isEmpty()) return null;
 
         try {
             WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -199,41 +253,41 @@ public class ReadTestcaseByFileYaml {
 
             // 👉 Nếu đang ở WebView -> dùng By của Selenium (DOM HTML)
             if (currentContext != null && currentContext.toUpperCase().contains("WEBVIEW")) {
-                if (locator.startsWith("//")) {
+                if (id.startsWith("//")) {
                     return (MobileElement) wait.until(
-                            ExpectedConditions.presenceOfElementLocated(By.xpath(locator))
+                            ExpectedConditions.presenceOfElementLocated(By.xpath(id))
                     );
-                } else if (locator.startsWith("css=")) {
-                    String css = locator.replaceFirst("css=", "");
+                } else if (id.startsWith("css=")) {
+                    String css = id.replaceFirst("css=", "");
                     return (MobileElement) wait.until(
                             ExpectedConditions.presenceOfElementLocated(By.cssSelector(css))
                     );
                 } else { // fallback id
                     return (MobileElement) wait.until(
-                            ExpectedConditions.presenceOfElementLocated(By.id(locator))
+                            ExpectedConditions.presenceOfElementLocated(By.id(id))
                     );
                 }
             }
 
             // 👉 Nếu đang ở Native -> dùng MobileBy
-            if (locator.startsWith("com")) { // resource-id
+            if (id.startsWith("com")) { // resource-id
                 return (MobileElement) wait.until(
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.id(locator))
+                        ExpectedConditions.presenceOfElementLocated(MobileBy.id(id))
                 );
-            } else if (locator.startsWith("//")) { // xpath
+            } else if (id.startsWith("//")) { // xpath
                 return (MobileElement) wait.until(
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.xpath(locator))
+                        ExpectedConditions.presenceOfElementLocated(MobileBy.xpath(id))
                 );
             } else { // className
                 return (MobileElement) wait.until(
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.className(locator))
+                        ExpectedConditions.presenceOfElementLocated(MobileBy.className(id))
                 );
             }
 
         } catch (Exception e) {
-            if (!failedElements.contains(locator)) {
-                System.out.println("⚠️ Element not found: " + locator + " - " + e.getMessage());
-                failedElements.add(locator);
+            if (!failedElements.contains(id)) {
+//                System.out.println("⚠️ Element not found: " + id + " - " + e.getMessage());
+                failedElements.add(id);
             }
             return null;
         }

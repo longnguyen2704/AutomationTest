@@ -21,6 +21,7 @@ public class DriverFactoryForHiFPT implements MobileCapabilityTypeEx {
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.rad.hifpt.activities.MainAppActivity");
         desiredCapabilities.setCapability("chromedriverAutodownload", true);
         desiredCapabilities.setCapability("chromedriverExecutable","/Users/baymax/.cache/selenium/chromedriver/mac-arm64/140.0.7339.82/chromedriver");
+        desiredCapabilities.setCapability("chromedriverExecutableDir", "/Users/baymax/.cache/selenium/chromedriver/mac-arm64/140.0.7339.82/chromedriver");
 
         // Specify Appium Server URL
         URL appiumServer = new URL("http://0.0.0.0:4723/wd/hub");

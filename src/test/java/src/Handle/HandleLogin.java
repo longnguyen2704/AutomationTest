@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 
-import static src.driverForHiFPT.getElements.getElement;
+import static src.Handle.ReadTestcaseByFileYaml.getElement;
 
 public class HandleLogin {
     public static void LoginScreen(AppiumDriver<MobileElement> driver) throws InterruptedException {
@@ -84,6 +84,13 @@ public class HandleLogin {
             MobileElement systemError = getElement(driver, "//android.widget.TextView[@text=\"Chưa hiển thị được thông tin, vui lòng thử lại sau.\"]");
             if (systemError != null && systemError.isDisplayed()) {
                 System.exit(1);
+            }
+
+            // Popup lost session
+            MobileElement lostSession = getElement(driver, "//android.widget.TextView[@text=\"Vui lòng đăng nhập lại.\"]");
+            if (lostSession != null && lostSession.isDisplayed()){
+                MobileElement buttonClose = getElement(driver, "//android.widget.TextView[@text=\"Đóng\"]");
+                buttonClose.click();
             }
 
         } catch (IOException | InterruptedException ex) {

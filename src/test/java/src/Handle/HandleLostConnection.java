@@ -3,7 +3,7 @@ package src.Handle;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 
-import static src.driverForHiFPT.getElements.getElement;
+import static src.Handle.ReadTestcaseByFileYaml.getElement;
 
 public class HandleLostConnection {
     public static void handleLostConnection(AppiumDriver<MobileElement> driver) {

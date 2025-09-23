@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/Handle/HandleClickBanner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/src/Handle/HandleLostConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/HandleLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/HandleLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/HandleLostConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/HandleLostConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/HandlePopupNotification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/HandlePopupNotification.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/ReadTestcaseByFileYaml.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/ReadTestcaseByFileYaml.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/SwipeUpAndDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/SwipeUpAndDown.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/Webview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/Webview.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/AppiumLaunchTestForHiFPT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/AppiumLaunchTestForHiFPT.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/DriverFactoryForHiFPT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/DriverFactoryForHiFPT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/getElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/getElements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/getElements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/getElements.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
