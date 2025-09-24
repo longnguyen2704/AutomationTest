@@ -10,15 +10,16 @@ import io.appium.java_client.touch.offset.PointOption;
 import java.time.Duration;
 
 public class HandleClickBanner {
+    // Remember change this path too
     public static final String BANNER_XPATH =
-            "//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.view.View[1]/android.view.View[9]/android.view.View/android.widget.ImageView";
+            "//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View[9]/android.view.View/android.widget.ImageView";
 
     public static void ClickBanner(AppiumDriver<MobileElement> driver, int swipeTimes) {
         try {
             // Swipe đến banner cuối
             for (int i = 0; i < swipeTimes; i++) {
                 swipeBanner(driver);
-                Thread.sleep(800); // chờ load banner tiếp theo
+                Thread.sleep(1000); // chờ load banner tiếp theo
             }
 
             // Lấy lại element mới nhất sau khi swipe
@@ -45,7 +46,7 @@ public class HandleClickBanner {
 
         new TouchAction<>(driver)
                 .press(PointOption.point(startX, y))
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(800)))
+                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(600)))
                 .moveTo(PointOption.point(endX, y))
                 .release()
                 .perform();

@@ -41,7 +41,7 @@ public class HiFPTAutomationTestReadTCs {
 
             // Đọc file YAML & thực thi test cases
             String fileYAML = "/Users/baymax/test.yaml"; //Remember to change
-            if (Webview.switchToWebView(appiumDriver,10, "")){
+            if (Webview.switchToWebView(appiumDriver,7, "")){
                 readTestDataFromYaml(fileYAML, appiumDriver);
             }
 

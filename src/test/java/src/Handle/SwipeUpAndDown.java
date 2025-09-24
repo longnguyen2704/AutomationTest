@@ -16,8 +16,8 @@ public class SwipeUpAndDown {
         int width = appiumDriver.manage().window().getSize().width;
 
         int startX = width / 2;
-        int startY = (int) (height * 0.65);
-        int endY = (int) (height * 0.35);
+        int startY = (int) (height * 0.6);
+        int endY = (int) (height * 0.4);
 
         for (int i = 0; i < times; i++) {
             new TouchAction<>(appiumDriver)

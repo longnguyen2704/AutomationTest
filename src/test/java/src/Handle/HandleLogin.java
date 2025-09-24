@@ -12,7 +12,7 @@ import static src.Handle.ReadTestcaseByFileYaml.getElement;
 
 public class HandleLogin {
     public static void LoginScreen(AppiumDriver<MobileElement> driver) throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 7);
 
         try {
             // Nhập số điện thoại
