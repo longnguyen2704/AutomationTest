@@ -2,7 +2,6 @@ package src.AutomationTestApplication;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import src.Handle.*;
 import src.driverForHiFPT.DriverFactoryForHiFPT;
 import src.driverForHiFPT.Platform;
@@ -16,8 +15,6 @@ public class HiFPTAutomationTestReadTCs {
     public static void main(String[] args) throws MalformedURLException {
 
         AppiumDriver<MobileElement> appiumDriver = DriverFactoryForHiFPT.getDriver(Platform.ANDROID);
-        WebDriverWait wait = new WebDriverWait(appiumDriver, 10);
-
         try {
             System.out.println("=====Start running Automation Test=====");
 

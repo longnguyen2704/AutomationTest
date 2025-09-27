@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4f532e2b-1ac8-4b23-a0a5-39fdde02d3cf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/AutomationTestApplication/HiFPTAutomationTestReadTCs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/HandleClickBanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/HandleClickBanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/SwipeUpAndDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/SwipeUpAndDown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/src/driverForHiFPT/getElements.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/src/Handle/ReadTestcaseByFileYaml.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/src/Handle/ReadTestcaseByFileYaml.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -159,6 +159,8 @@ public class ReadTestcaseByFileYaml {
                     element = (MobileElement) wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.id(id)));
                 } else if (id.startsWith("//")) {
                     element = (MobileElement) wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.xpath(id)));
+                } else if (id.startsWith("00000000")) {
+                    element = (MobileElement) driver.findElementsById(id);
                 } else {
                     element = (MobileElement) wait.until(ExpectedConditions.presenceOfElementLocated(MobileBy.className(id)));
                 }

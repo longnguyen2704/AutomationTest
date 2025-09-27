@@ -11,8 +11,8 @@ import java.time.Duration;
 
 public class HandleClickBanner {
     // Remember change this path too
-    public static final String BANNER_XPATH =
-            "//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View[9]/android.view.View/android.widget.ImageView";
+    public static final String ClassName =
+            "android.widget.ImageView";
 
     public static void ClickBanner(AppiumDriver<MobileElement> driver, int swipeTimes) {
         try {
@@ -23,7 +23,7 @@ public class HandleClickBanner {
             }
 
             // Lấy lại element mới nhất sau khi swipe
-            MobileElement banner = driver.findElement(MobileBy.xpath(BANNER_XPATH));
+            MobileElement banner = driver.findElement(MobileBy.className(ClassName));
             if (banner != null && banner.isDisplayed()) {
                 banner.click();
                 System.out.println("✅ Click banner cuối cùng thành công");
